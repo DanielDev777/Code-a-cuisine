@@ -1,1 +1,112 @@
-/* You can add global styles to this file, and also import other style files */
+@use './fontimport.scss';
+@use './vars.scss';
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+// html {
+//   @include mat.theme((
+//     color: (
+//       primary: mat.$cyan-palette,
+//       tertiary: mat.$orange-palette,
+//     ),
+//     density: 0,
+//   ));
+// }
+
+// body {
+//   // Default the application to a light color theme. This can be changed to
+//   // `dark` to enable the dark color theme, or to `light dark` to defer to the
+//   // user's system settings.
+//   color-scheme: light;
+
+//   // Set a default background, font and text colors for the application using
+//   // Angular Material's system-level CSS variables. Learn more about these
+//   // variables at https://material.angular.dev/guide/system-variables
+//   background-color: var(--mat-sys-surface);
+//   color: var(--mat-sys-on-surface);
+//   font: var(--mat-sys-body-medium);
+
+//   // Reset the user agent margin.
+//   margin: 0;
+// }
+
+
+// General //
+html, body {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+*, *::before, *::after {
+	box-sizing: inherit;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, p {
+    margin: 0;
+}
+
+h1, h2, h3, h4 {
+	font-family: 'Ubuntu', sans-serif;
+}
+
+p, a, span, div {
+	font-family: 'Quicksand', sans-serif;
+}
+
+h1, .h1, h2, .h2 {
+    font-size: 4rem;
+}
+
+h3, .h3 {
+    font-size: 3rem;
+	@media (max-width: 991px) {
+		font-size: 2rem;
+	}
+	@media (max-width: 767px) {
+		font-size: 1.5rem;
+	}
+}
+
+h4, .h4 {
+    font-size: 2rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1440px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+// General //
+
+// Buttons //
+.main-btn {
+    padding: .5rem 1rem;
+    border: none;
+}
+
+.btn-creme {
+    background-color: vars.$creme;
+    color: vars.$green;
+    font-size: 1.5rem;
+	transition: all .5s ease-out;
+	&:hover {
+		background: vars.$creme-hover;
+		padding: .5rem 1.5rem;
+		a {
+			font-weight: 600;
+		}
+	}
+    a {
+        color: inherit;
+        font-size: inherit;
+    }
+}
+// Buttons //

@@ -1,0 +1,10 @@
+// General //
+@mixin flexBox($fd: row, $ai: center, $jc: center, $g: 0px, $wr: wrap) {
+    display: flex;
+    flex-direction: $fd;
+    align-items: $ai;
+    justify-content: $jc;
+    flex-wrap: $wr;
+    gap: $g;
+}
+// General //

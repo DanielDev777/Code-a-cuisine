@@ -1,0 +1,98 @@
+@use '../../../vars.scss' as v;
+@use '../../../mixins.scss' as m;
+
+section {
+	background: v.$olivegreen;
+	height: 100vh;
+	overflow: hidden;
+	.container {
+		height: 100%;
+	}
+}
+
+.hero {
+	@include m.flexBox($jc: space-between, $ai: center);
+	position: relative;
+	width: 100%;
+	height: 100%;
+	&__welcome {
+		padding: 200px 0 100px;
+		flex: 0 0 60%;
+		max-width: 60%;
+		height: 100%;
+		@include m.flexBox($fd: column, $jc: space-between, $ai: flex-start);
+		@media (max-width: 991px) {
+			flex: 0 0 calc(100% - 200px);
+			max-width: calc(100% - 200px);
+		}
+		@media (max-width: 575px) {
+			flex: 0 0 calc(100% - 125px);
+			max-width: calc(100% - 125px);
+		}
+		> * {
+			color: v.$creme;
+		}
+		h1 {
+			font-size: 6rem;
+			margin-bottom: 50px;
+			@media (max-width: 767px) {
+				font-size: 4rem;
+			}
+		}
+	}
+	&__plates {
+		width: 35%;
+		position: absolute;
+		right: 0;
+		top: 0px;
+		height: 100vh;
+		@include m.flexBox(
+			$fd: column,
+			$ai: flex-start,
+			$jc: center,
+			$wr: nowrap
+		);
+		@media (max-width: 991px) {
+			max-width: 400px;
+			width: 100%;
+			transform: translateX(50%);
+			right: -25px;
+		}
+		@media (max-width: 575px) {
+			right: -75px;
+		}
+		img {
+			position: absolute;
+			left: 0;
+			width: 100%;
+			object-fit: contain;
+			&:nth-of-type(1) {
+				top: -50px;
+			}
+			&:nth-of-type(even) {
+				top: 50%;
+				transform: translateY(-50%);
+			}
+			&:nth-of-type(3) {
+				bottom: -50px;
+			}
+			@media (max-width: 1200px) {
+				&:nth-of-type(1) {
+					top: -10px;
+				}
+				&:nth-of-type(3) {
+					bottom: -10px;
+				}
+			}
+		}
+	}
+	&__footer {
+		@include m.flexBox($jc: flex-start, $g: 20px);
+		a {
+			@include m.flexBox($g: 5px);
+			color: v.$creme;
+			transition: all 0.2s ease;
+			cursor: pointer;
+		}
+	}
+}

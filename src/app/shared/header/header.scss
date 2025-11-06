@@ -1,0 +1,23 @@
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 0;
+    img {
+        &.logo-creme {
+            display: none;
+        }
+    }
+}
+
+:host(.green-bg) {
+    img {
+        &:not(.logo-creme) {
+            display: none;
+        }
+        &.logo-creme {
+            display: block;
+        }
+    }
+}
