@@ -8,3 +8,11 @@
     gap: $g;
 }
 // General //
+
+// Background //
+@mixin backgroundProperties($br: no-repeat, $bp: center, $bs: contain) {
+	background-repeat: $br;
+    background-position: $bp;
+    background-size: $bs;
+}
+// Background //

@@ -16,7 +16,7 @@ section {
 	width: 100%;
 	height: 100%;
 	&__welcome {
-		padding: 200px 0 100px;
+		padding: v.$spacing-xxxl 0 v.$spacing-xl;
 		flex: 0 0 60%;
 		max-width: 60%;
 		height: 100%;
@@ -34,7 +34,7 @@ section {
 		}
 		h1 {
 			font-size: 6rem;
-			margin-bottom: 50px;
+			margin-bottom: v.$spacing-lg;
 			@media (max-width: 767px) {
 				font-size: 4rem;
 			}

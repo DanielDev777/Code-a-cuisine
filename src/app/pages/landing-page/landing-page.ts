@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { Header } from "../../shared/header/header";
 
@@ -7,6 +7,7 @@ import { Header } from "../../shared/header/header";
   imports: [RouterLink, Header],
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LandingPage {
 

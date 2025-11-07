@@ -1,1 +1,56 @@
-<p>ingredients works!</p>
+<section class="ingredients">
+	<app-header></app-header>
+	<div class="container">
+		<div class="ingredients__body">
+			<h1 class="h2 darkgreen">Generate recipe</h1>
+			<p class="darkgreen">
+				Got random stuff in your kitchen? Pop it in - we've got the
+				perfect recipe waiting.
+			</p>
+			<div class="ingredients__row">
+				<div class="ingredients__input-container green-card">
+					<div class="form-control name">
+						<label for="ingredient" class="ingredients__label"
+							>Ingredient</label
+						>
+						<input
+							type="text"
+							id="ingredient"
+							ngModel="ingredient"
+						/>
+					</div>
+					<div class="form-control amount">
+						<span class="ingredients__label">Serving size</span>
+						<div class="ingredients__action">
+							<input type="number" id="amount" ngModel="amount" />
+							<select
+								id="unit"
+								id="unit"
+								ngModel="unit"
+								(click)="toggleSelect()"
+								(change)="closeSelect()"
+								(blur)="closeSelect()"
+								[class.open]="isSelectOpen()"
+							>
+								<option value="gram">gram</option>
+								<option value="ml">ml</option>
+								<option value="piece">piece</option>
+							</select>
+							<button class="btn-add">
+								<img src="img/icons/add.svg" />
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="ingredients__list-container green-card">
+					<span class="ingredients__label"
+						>List of your Ingredients</span
+					>
+					<ul>
+						@for (item of ingredientsList(); track $index) { }
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
