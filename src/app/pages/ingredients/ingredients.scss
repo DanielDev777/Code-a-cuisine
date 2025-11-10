@@ -24,6 +24,7 @@
 			flex: 0 0 calc(60% - 16px);
 			max-width: calc(60% - 16px);
 			@include m.flexBox($jc: space-between, $ai: flex-start);
+			position: relative;
 			.form-control {
 				@include m.flexBox(
 					$fd: column,
@@ -42,32 +43,42 @@
 					flex: 0 0 35%;
 					max-width: 35%;
 				}
-				input,
-				select {
-					border-radius: v.$pill-radius;
-					border: 0;
-					background-color: v.$creme;
-					padding: v.$spacing-xs v.$spacing-sm;
-					&:focus {
-						outline: none;
-					}
-				}
-				select {
-					appearance: none;
-					-webkit-appearance: none;
-					-moz-appearance: none;
-					padding-right: v.$spacing-md;
-					position: relative;
-					background-image: url('../../../../public/img/icons/arrow_drop_down.svg');
-					@include m.backgroundProperties($bp: right 5px center, $bs: 10px);
-					&.open {
-						background-image: url('../../../../public/img/icons/arrow_drop_up.svg');
-					}
-				}
+				@include m.ingredientInputStyling();
 			}
 		}
 	}
 	&__list {
+		@include m.ingredientInputStyling();
+		div {
+			@include m.flexBox($jc: flex-start);
+		}
+		input {
+			width: 50px;
+			&::-webkit-outer-spin-button,
+			&::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+		}
+		select {
+			margin-left: v.$spacing-xs;
+			margin-right: v.$spacing-sm;
+		}
+		button {
+			background: transparent;
+			border: none;
+			cursor: pointer;
+			padding: 3px 6px;
+			border-radius: 7px;
+			img {
+				width: 15px;
+				height: 15px;
+				object-fit: contain;
+			}
+			&:first-of-type {
+				margin-left: auto;
+			}
+		}
 		&-container {
 			flex: 0 0 calc(40% - 16px);
 			max-width: calc(40% - 16px);
@@ -79,11 +90,7 @@
 		color: v.$darkgreen;
 	}
 	&__action {
-		@include m.flexBox(
-			$jc: space-between,
-			$ai: center,
-			$g: v.$spacing-xs
-		);
+		@include m.flexBox($jc: space-between, $ai: center, $g: v.$spacing-xs);
 		input {
 			width: 60px;
 			&::-webkit-outer-spin-button,
@@ -92,5 +99,14 @@
 				margin: 0;
 			}
 		}
+	}
+}
+
+.suggestions-box {
+	padding: v.$spacing-sm v.$spacing-md;
+	.suggestion-item {
+		font-weight: 600;
+		cursor: pointer;
+		margin-bottom: v.$spacing-xs;
 	}
 }

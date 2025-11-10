@@ -16,38 +16,103 @@
 						<input
 							type="text"
 							id="ingredient"
-							ngModel="ingredient"
+							[formControl]="ingredientControl"
 						/>
 					</div>
 					<div class="form-control amount">
 						<span class="ingredients__label">Serving size</span>
 						<div class="ingredients__action">
-							<input type="number" id="amount" ngModel="amount" />
+							<input
+								type="number"
+								id="amount"
+								[formControl]="amountControl"
+							/>
 							<select
 								id="unit"
-								id="unit"
-								ngModel="unit"
+								[formControl]="unitControl"
 								(click)="toggleSelect()"
 								(change)="closeSelect()"
 								(blur)="closeSelect()"
 								[class.open]="isSelectOpen()"
 							>
-								<option value="gram">gram</option>
+								<option value="g">gram</option>
 								<option value="ml">ml</option>
 								<option value="piece">piece</option>
 							</select>
-							<button class="btn-add">
+							<button class="btn-add" (click)="addToList()">
 								<img src="img/icons/add.svg" />
 							</button>
 						</div>
 					</div>
+					@if (filteredIngredients().length > 0) {
+					<div class="suggestions-box">
+						@for (ingredient of filteredIngredients(); track
+						ingredient) {
+						<p
+							class="suggestion-item"
+							(click)="selectIngredient(ingredient)"
+						>
+							{{ ingredient }}
+						</p>
+						}
+					</div>
+					}
 				</div>
 				<div class="ingredients__list-container green-card">
 					<span class="ingredients__label"
 						>List of your Ingredients</span
 					>
-					<ul>
-						@for (item of ingredientsList(); track $index) { }
+					<ul class="ingredients__list">
+						@for (item of ingredientsList(); track $index) {
+						<li>
+							<div>
+								@if (editingIndex() === $index) {
+								<input
+									type="number"
+									[ngModel]="editAmount()"
+									(ngModelChange)="editAmount.set($event)"
+								/>
+								<select
+									[ngModel]="editUnit()"
+									(ngModelChange)="editUnit.set($event)"
+								>
+									<option value="g">gram</option>
+									<option value="ml">ml</option>
+									<option value="piece">piece</option>
+								</select>
+								<span>{{ item.name }}</span>
+								<button class="save-btn" (click)="saveEdit()">
+									<img src="img/icons/check.svg" />
+								</button>
+								<button
+									class="cancel-btn"
+									(click)="cancelEdit()"
+								>
+									<img src="img/icons/delete.svg" />
+								</button>
+								} @else { 
+									@if (item.unit == 'piece') {
+										{{ item.amount }}x 
+									} @else { 
+										{{ item.amount}}{{ item.unit }}
+									}
+								{{ item.name }}
+								<button
+									class="edit-btn"
+									(click)="editIngredient($index)"
+								>
+									<img src="img/icons/edit.svg" />
+								</button>
+								<button
+									class="remove-btn"
+									(click)="removeIngredient($index)"
+								>
+									<img src="img/icons/delete.svg" />
+								</button>
+								}
+							</div>
+						</li>
+						}
 					</ul>
 				</div>
 			</div>

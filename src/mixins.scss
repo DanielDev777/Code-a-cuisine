@@ -1,18 +1,47 @@
+@use './vars.scss' as v;
+
 // General //
 @mixin flexBox($fd: row, $ai: center, $jc: center, $g: 0px, $wr: wrap) {
-    display: flex;
-    flex-direction: $fd;
-    align-items: $ai;
-    justify-content: $jc;
-    flex-wrap: $wr;
-    gap: $g;
+	display: flex;
+	flex-direction: $fd;
+	align-items: $ai;
+	justify-content: $jc;
+	flex-wrap: $wr;
+	gap: $g;
 }
 // General //
 
 // Background //
 @mixin backgroundProperties($br: no-repeat, $bp: center, $bs: contain) {
 	background-repeat: $br;
-    background-position: $bp;
-    background-size: $bs;
+	background-position: $bp;
+	background-size: $bs;
 }
 // Background //
+
+// Forms //
+@mixin ingredientInputStyling() {
+	input,
+	select {
+		border-radius: v.$pill-radius;
+		border: 0;
+		background-color: v.$creme;
+		padding: v.$spacing-xs v.$spacing-sm;
+		&:focus {
+			outline: none;
+		}
+	}
+	select {
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		padding-right: v.$spacing-md;
+		position: relative;
+		background-image: url('../public/img/icons/arrow_drop_down.svg');
+		@include backgroundProperties($bp: right 5px center, $bs: 10px);
+		&.open {
+			background-image: url('../public/img/icons/arrow_drop_up.svg');
+		}
+	}
+}
+// Forms //
