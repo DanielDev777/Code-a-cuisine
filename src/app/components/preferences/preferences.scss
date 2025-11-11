@@ -1,0 +1,78 @@
+@use '../../../vars.scss' as v;
+@use '../../../mixins.scss' as m;
+
+.preferences {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: #fff;
+	padding: v.$spacing-xl 0;
+	&__body {
+		max-width: 600px;
+		margin: 0 auto;
+		h2 {
+			text-align: center;
+			padding-bottom: v.$spacing-lg;
+		}
+	}
+	&__head {
+		@include m.flexBox($jc: space-between, $ai: flex-start);
+		* {
+			color: v.$darkgreen;
+		}
+	}
+	&__portions,
+	&__people {
+		@include m.flexBox($fd: column, $ai: flex-start, $g: v.$spacing-md);
+	}
+	&__card {
+		padding: v.$spacing-md;
+		background-color: v.$olive-light;
+		border-radius: v.$card-radius;
+	}
+}
+
+.options {
+	h3 {
+		color: v.$darkgreen;
+	}
+	&__row {
+		@include m.flexBox($jc: flex-start, $g: v.$spacing-sm);
+	}
+	&__group {
+		@include m.flexBox($fd:column, $jc: flex-start, $g: v.$spacing-sm);
+		input {
+			display: none;
+		}
+	}
+}
+
+.input-group {
+	@include m.flexBox($ai: center, $g: v.$spacing-xs);
+	input {
+		border: none;
+		background-color: v.$olive-light;
+		padding: v.$spacing-xs;
+		width: 25px;
+		text-align: center;
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+	}
+	button {
+		background-color: transparent;
+		border: none;
+	}
+}
+
+.back-btn {
+	border: none;
+	background: transparent;
+	font-weight: 500;
+	color: v.$green;
+	@include m.flexBox($jc: flex-start, $ai: center, $g: v.$spacing-xs);
+}

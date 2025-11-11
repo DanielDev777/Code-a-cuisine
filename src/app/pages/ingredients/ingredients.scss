@@ -7,7 +7,12 @@
 		height: 100%;
 	}
 	&__body {
+		max-width: 1000px;
+		margin: 0 auto;
 		@include m.flexBox($fd: column, $g: v.$spacing-md);
+		.main-btn {
+			align-self: flex-end;
+		}
 	}
 	&__row {
 		@include m.flexBox(
@@ -17,12 +22,11 @@
 		);
 		width: 100%;
 		margin-top: v.$spacing-lg;
-		max-width: 1000px;
 	}
 	&__input {
 		&-container {
-			flex: 0 0 calc(60% - 16px);
-			max-width: calc(60% - 16px);
+			flex: 0 0 calc(55% - 16px);
+			max-width: calc(55% - 16px);
 			@include m.flexBox($jc: space-between, $ai: flex-start);
 			position: relative;
 			.form-control {
@@ -38,6 +42,11 @@
 					input {
 						width: 100%;
 					}
+					.error-message {
+						color: #d32f2f;
+						font-size: 0.85rem;
+						margin-top: v.$spacing-xs;
+					}
 				}
 				&.amount {
 					flex: 0 0 35%;
@@ -48,40 +57,9 @@
 		}
 	}
 	&__list {
-		@include m.ingredientInputStyling();
-		div {
-			@include m.flexBox($jc: flex-start);
-		}
-		input {
-			width: 50px;
-			&::-webkit-outer-spin-button,
-			&::-webkit-inner-spin-button {
-				-webkit-appearance: none;
-				margin: 0;
-			}
-		}
-		select {
-			margin-left: v.$spacing-xs;
-			margin-right: v.$spacing-sm;
-		}
-		button {
-			background: transparent;
-			border: none;
-			cursor: pointer;
-			padding: 3px 6px;
-			border-radius: 7px;
-			img {
-				width: 15px;
-				height: 15px;
-				object-fit: contain;
-			}
-			&:first-of-type {
-				margin-left: auto;
-			}
-		}
 		&-container {
-			flex: 0 0 calc(40% - 16px);
-			max-width: calc(40% - 16px);
+			flex: 0 0 calc(45% - 16px);
+			max-width: calc(45% - 16px);
 		}
 	}
 	&__label {

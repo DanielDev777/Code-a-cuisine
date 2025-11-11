@@ -30,7 +30,7 @@ export class IngredientsService {
 	]);
 
 	// User's selected ingredients list
-	private ingredientsList = signal<Ingredient[]>([]);
+	ingredientsList = signal<Ingredient[]>([]);
 
 	// Public getters
 	getAvailableIngredients() {

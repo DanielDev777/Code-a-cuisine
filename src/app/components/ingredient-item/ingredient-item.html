@@ -1,0 +1,39 @@
+<li>
+	<div>
+		@if (isEditing()) {
+			<input
+				type="number"
+				[ngModel]="editAmount()"
+				(ngModelChange)="editAmount.set($event)"
+			/>
+			<select
+				[ngModel]="editUnit()"
+				(ngModelChange)="editUnit.set($event)"
+			>
+				<option value="g">gram</option>
+				<option value="ml">ml</option>
+				<option value="piece">piece</option>
+			</select>
+			<span>{{ item().name }}</span>
+			<button class="save-btn" (click)="saveEdit()">
+				<img src="img/icons/check.svg" />
+			</button>
+			<button class="cancel-btn" (click)="cancelEdit()">
+				<img src="img/icons/delete.svg" />
+			</button>
+		} @else {
+			@if (item().unit == 'piece') {
+				{{ item().amount }}x 
+			} @else { 
+				{{ item().amount}}{{ item().unit }}
+			}
+			{{ item().name }}
+			<button class="edit-btn" (click)="startEdit()">
+				<img src="img/icons/edit.svg" />
+			</button>
+			<button class="remove-btn" (click)="removeItem()">
+				<img src="img/icons/delete.svg" />
+			</button>
+		}
+	</div>
+</li>

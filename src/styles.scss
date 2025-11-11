@@ -49,7 +49,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, p {
     margin: 0;
 }
 
-h1, h2, h3, h4, p, a, span, div {
+h1, h2, h3, h4, p, a, span, div, button {
 	font-family: 'Quicksand', sans-serif;
 }
 
@@ -71,6 +71,10 @@ h4, .h4 {
     font-size: 2rem;
 }
 
+h5, .h5 {
+	font-size: 1.5rem;
+}
+
 a {
     text-decoration: none;
 }
@@ -88,23 +92,40 @@ a {
 section {
 	padding: 100px 0;
 }
+.d-none {
+	display: none;
+}
+button {
+	cursor: pointer;
+}
 // General //
 
 // Buttons //
 .main-btn {
-    padding: .5rem 1rem;
+    padding: 1rem 1.5rem;
     border: none;
 }
 
 .btn-creme {
     background-color: v.$creme;
     color: v.$green;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 	transition: all .5s ease-out;
 	&:hover {
 		background: v.$creme-hover;
-		padding: .5rem 1.5rem;
+		padding: 1rem 2rem;
 		font-weight: 600;
+	}
+}
+.btn-green {
+    background-color: v.$olivegreen;
+    color: v.$creme;
+    font-size: 1.2rem;
+	font-weight: 500;
+	transition: all .5s ease-out;
+	cursor: pointer;
+	&:hover {
+		background-color: v.$green;
 	}
 }
 

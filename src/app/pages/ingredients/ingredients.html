@@ -18,6 +18,11 @@
 							id="ingredient"
 							[formControl]="ingredientControl"
 						/>
+						@if (duplicateError()) {
+							<span class="error-message">
+								This ingredient is already added. Please use the edit button to modify it.
+							</span>
+						}
 					</div>
 					<div class="form-control amount">
 						<span class="ingredients__label">Serving size</span>
@@ -64,58 +69,25 @@
 					>
 					<ul class="ingredients__list">
 						@for (item of ingredientsList(); track $index) {
-						<li>
-							<div>
-								@if (editingIndex() === $index) {
-								<input
-									type="number"
-									[ngModel]="editAmount()"
-									(ngModelChange)="editAmount.set($event)"
-								/>
-								<select
-									[ngModel]="editUnit()"
-									(ngModelChange)="editUnit.set($event)"
-								>
-									<option value="g">gram</option>
-									<option value="ml">ml</option>
-									<option value="piece">piece</option>
-								</select>
-								<span>{{ item.name }}</span>
-								<button class="save-btn" (click)="saveEdit()">
-									<img src="img/icons/check.svg" />
-								</button>
-								<button
-									class="cancel-btn"
-									(click)="cancelEdit()"
-								>
-									<img src="img/icons/delete.svg" />
-								</button>
-								} @else { 
-									@if (item.unit == 'piece') {
-										{{ item.amount }}x 
-									} @else { 
-										{{ item.amount}}{{ item.unit }}
-									}
-								{{ item.name }}
-								<button
-									class="edit-btn"
-									(click)="editIngredient($index)"
-								>
-									<img src="img/icons/edit.svg" />
-								</button>
-								<button
-									class="remove-btn"
-									(click)="removeIngredient($index)"
-								>
-									<img src="img/icons/delete.svg" />
-								</button>
-								}
-							</div>
-						</li>
+							<app-ingredient-item
+								[item]="item"
+								[index]="$index"
+								[isEditing]="editingIndex() === $index"
+								(edit)="editIngredient($event)"
+								(save)="saveEdit($event)"
+								(cancel)="cancelEdit()"
+								(remove)="removeIngredient($event)"
+							/>
 						}
 					</ul>
 				</div>
 			</div>
+			<button class="main-btn btn-green" (click)="showModal()" [class.d-none]="!nextstepAvailable()">
+				Next step
+			</button>
+			<!-- @if (isModalVisible()) { -->
+				<app-preferences (close)="hideModal()" [ingredients]="ingredientsList()"></app-preferences>
+			<!-- } -->
 		</div>
 	</div>
 </section>

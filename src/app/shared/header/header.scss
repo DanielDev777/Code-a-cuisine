@@ -4,6 +4,9 @@ header {
     left: 0;
     width: 100%;
     padding: 20px 0;
+	a {
+		cursor: pointer;
+	}
     img {
         &.logo-creme {
             display: none;

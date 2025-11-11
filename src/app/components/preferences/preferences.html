@@ -1,0 +1,144 @@
+<div class="preferences">
+	<app-header></app-header>
+	<div class="container">
+		<button class="back-btn" (click)="closeModal()">
+			<img src="img/icons/arrow-left.svg" />
+			Ingredients
+		</button>
+		<div class="preferences__body">
+			<h2 class="h3">Choose your preferences</h2>
+			<div class="preferences__head">
+				<div class="preferences__portions">
+					<span>How many portions do you need?</span>
+					<div class="input-group">
+						<button (click)="decreaseValue(portions)">
+							<img
+								src="img/icons/box-minus.svg"
+								alt="Minus in a box icon"
+							/>
+						</button>
+						<input
+							type="number"
+							id="portions"
+							value="2"
+							min="1"
+							max="10"
+							[formControl]="portions"
+						/>
+						<label for="portions">Portions</label>
+						<button (click)="increaseValue(portions)">
+							<img
+								src="img/icons/box-plus.svg"
+								alt="Plus in a box icon"
+							/>
+						</button>
+					</div>
+				</div>
+				<div class="preferences__people">
+					<span>How many are cooking?</span>
+					<div class="input-group">
+						<button (click)="decreaseValue(people)">
+							<img
+								src="img/icons/box-minus.svg"
+								alt="Minus in a box icon"
+							/>
+						</button>
+						<input
+							type="number"
+							id="people"
+							value="1"
+							min="1"
+							max="5"
+							[formControl]="people"
+						/>
+						<label for="people">Persons</label>
+						<button (click)="increaseValue(people)">
+							<img
+								src="img/icons/box-plus.svg"
+								alt="Plus in a box icon"
+							/>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="preferences__card">
+				<div class="options">
+					<h3 class="h5">
+						<img src="img/icons/time.svg" />
+						Cooking Time
+					</h3>
+					<div class="options__row">
+						<div class="options__group">
+							<input
+								type="radio"
+								[formControl]="time"
+								value="quick"
+								id="quick"
+							/>
+							<label for="quick">Quick</label>
+							<span>Up to 20min</span>
+						</div>
+						<div class="options__group">
+							<input
+								type="radio"
+								[formControl]="time"
+								value="medium"
+								id="medium"
+							/>
+							<label for="medium">Medium</label>
+							<span>25-40min</span>
+						</div>
+						<div class="options__group">
+							<input
+								type="radio"
+								[formControl]="time"
+								value="complex"
+								id="complex"
+							/>
+							<label for="complex">Complex</label>
+							<span>over 45min</span>
+						</div>
+					</div>
+				</div>
+				<div class="option">
+					<h3 class="h5">
+						<img src="img/icons/world.svg" />
+						Cuisine
+					</h3>
+					<div class="options__row">
+						@for (option of cuisineOptions; track $index) {
+						<div class="options__group">
+							<input
+								type="radio"
+								[formControl]="cuisine"
+								value="{{ option }}"
+								id="{{ option }}"
+							/>
+							<label for="{{ option }}">{{ capitalize(option) }}</label>
+						</div>
+						}
+					</div>
+				</div>
+				<div class="option">
+					<h3 class="h5">
+						<img src="img/icons/fork_spoon.svg" />
+						Diet preferences
+					</h3>
+					<div class="options__row">
+						@for (option of dietOptions; track $index) {
+						<div class="options__group">
+							<input
+								type="radio"
+								[formControl]="diet"
+								value="{{ option }}"
+								id="{{ option }}"
+							/>
+							<label for="{{ option }}">{{ capitalize(option) }}</label>
+						</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

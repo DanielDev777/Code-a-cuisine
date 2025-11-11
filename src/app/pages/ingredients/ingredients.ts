@@ -9,10 +9,12 @@ import { Header } from '../../shared/header/header';
 import { ReactiveFormsModule, FormControl, FormsModule } from '@angular/forms';
 import { Ingredient } from '../../interfaces/ingredient';
 import { IngredientsService } from '../../services/ingredients.service';
+import { IngredientItem } from '../../components/ingredient-item/ingredient-item';
+import { Preferences } from '../../components/preferences/preferences';
 
 @Component({
 	selector: 'app-ingredients',
-	imports: [Header, ReactiveFormsModule, FormsModule],
+	imports: [Header, ReactiveFormsModule, FormsModule, IngredientItem, Preferences],
 	templateUrl: './ingredients.html',
 	styleUrl: './ingredients.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush
@@ -26,18 +28,18 @@ export class Ingredients {
 
 	isSelectOpen = signal(false);
 	editingIndex = signal<number | null>(null);
-
-	editAmount = signal<number>(0);
-	editUnit = signal('g');
+	duplicateError = signal(false);
+	nextstepAvailable = signal(false);
+	isModalVisible = signal(false);
 
 	ingredientValue = signal('');
 
-	// Get ingredients list from service
 	ingredientsList = computed(() => this.ingredientsService.getIngredientsList()());
 
 	constructor() {
 		this.ingredientControl.valueChanges.subscribe((value) => {
 			this.ingredientValue.set(value || '');
+			this.duplicateError.set(false);
 		});
 	}
 
@@ -56,42 +58,65 @@ export class Ingredients {
 
 	selectIngredient(ingredient: string) {
 		this.ingredientControl.setValue(ingredient);
+		this.duplicateError.set(false);
+	}
+
+	private getFormValues() {
+		return {
+			name: this.ingredientControl.value || '',
+			amount: this.amountControl.value || 0,
+			unit: this.unitControl.value || 'g'
+		};
+	}
+
+	private isDuplicateIngredient(name: string): boolean {
+		return this.ingredientsList().some(
+			(item) => item.name.toLowerCase() === name.toLowerCase()
+		);
+	}
+
+	private resetForm(): void {
+		this.ingredientControl.setValue('');
+		this.amountControl.setValue(null);
+		this.unitControl.setValue('g');
+		this.duplicateError.set(false);
 	}
 
 	addToList() {
-		const name = this.ingredientControl.value || '';
-		const amount = this.amountControl.value || 0;
-		const unit = this.unitControl.value || 'g';
+		const { name, amount, unit } = this.getFormValues();
+		if (!name || !amount) {
+			return;
+		}
+		if (this.isDuplicateIngredient(name)) {
+			this.duplicateError.set(true);
+			return;
+		}
 
-		if (name && amount) {
-			const newIngredient: Ingredient = { name, amount, unit };
-			this.ingredientsService.addIngredient(newIngredient);
+		const newIngredient: Ingredient = { name, amount, unit };
+		this.ingredientsService.addIngredient(newIngredient);
+		this.checkIngredientsLength();
+		this.resetForm();
+	}
 
-			this.ingredientControl.setValue('');
-			this.amountControl.setValue(null);
-			this.unitControl.setValue('g');
+	checkIngredientsLength() {
+		if (this.ingredientsList().length >= 4) {
+			this.nextstepAvailable.set(true);
 		}
 	}
 
 	editIngredient(index: number) {
-		const ingredient = this.ingredientsList()[index];
-		this.editAmount.set(ingredient.amount);
-		this.editUnit.set(ingredient.unit);
 		this.editingIndex.set(index);
 	}
 
-	saveEdit() {
-		const index = this.editingIndex();
-		if (index !== null) {
-			const currentIngredient = this.ingredientsList()[index];
-			const updatedIngredient: Ingredient = {
-				name: currentIngredient.name,
-				amount: this.editAmount(),
-				unit: this.editUnit()
-			};
-			this.ingredientsService.updateIngredient(index, updatedIngredient);
-			this.editingIndex.set(null);
-		}
+	saveEdit(event: { index: number; amount: number; unit: string }) {
+		const currentIngredient = this.ingredientsList()[event.index];
+		const updatedIngredient: Ingredient = {
+			name: currentIngredient.name,
+			amount: event.amount,
+			unit: event.unit
+		};
+		this.ingredientsService.updateIngredient(event.index, updatedIngredient);
+		this.editingIndex.set(null);
 	}
 
 	cancelEdit() {
@@ -100,5 +125,13 @@ export class Ingredients {
 
 	removeIngredient(index: number) {
 		this.ingredientsService.removeIngredient(index);
+	}
+
+	showModal() {
+		this.isModalVisible.set(true);
+	}
+
+	hideModal() {
+		this.isModalVisible.set(false);
 	}
 }

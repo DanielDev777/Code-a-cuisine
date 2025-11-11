@@ -1,0 +1,39 @@
+@use '../../../vars.scss' as v;
+@use '../../../mixins.scss' as m;
+
+li {
+	div {
+		@include m.flexBox($jc: flex-start);
+		@include m.ingredientInputStyling();
+	}
+	
+	input {
+		width: 50px;
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+	}
+	
+	select {
+		margin-left: v.$spacing-xs;
+		margin-right: v.$spacing-sm;
+	}
+	
+	button {
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 3px 6px;
+		border-radius: 7px;
+		img {
+			width: 15px;
+			height: 15px;
+			object-fit: contain;
+		}
+		&:first-of-type {
+			margin-left: auto;
+		}
+	}
+}
