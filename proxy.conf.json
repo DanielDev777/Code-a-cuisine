@@ -1,0 +1,20 @@
+{
+  "/api/webhook": {
+    "target": "http://localhost:5678",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/webhook": "/webhook"
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api/webhook-test": {
+    "target": "http://localhost:5678",
+    "secure": false,
+    "pathRewrite": {
+      "^/api/webhook-test": "/webhook-test"
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

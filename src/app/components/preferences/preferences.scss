@@ -16,9 +16,14 @@
 			text-align: center;
 			padding-bottom: v.$spacing-lg;
 		}
+		.main-btn {
+			margin: 0 auto;
+			display: block;
+		}
 	}
 	&__head {
 		@include m.flexBox($jc: space-between, $ai: flex-start);
+		margin-bottom: v.$spacing-md;
 		* {
 			color: v.$darkgreen;
 		}
@@ -31,12 +36,15 @@
 		padding: v.$spacing-md;
 		background-color: v.$olive-light;
 		border-radius: v.$card-radius;
+		margin-bottom: v.$spacing-md;
 	}
 }
 
 .options {
+	margin-bottom: v.$spacing-md;
 	h3 {
 		color: v.$darkgreen;
+		padding-bottom: v.$spacing-sm;
 	}
 	&__row {
 		@include m.flexBox($jc: flex-start, $g: v.$spacing-sm);
@@ -45,6 +53,21 @@
 		@include m.flexBox($fd:column, $jc: flex-start, $g: v.$spacing-sm);
 		input {
 			display: none;
+			&:checked + label {
+				background-color: v.$olive-light;
+			}
+		}
+		label {
+			font-weight: 500;
+			padding: 6px 12px;
+			background-color: v.$creme;
+			border-radius: v.$pill-radius;
+			&:hover {
+				background-color: v.$creme-hover;
+			}
+		}
+		span {
+			font-size: 14px;
 		}
 	}
 }

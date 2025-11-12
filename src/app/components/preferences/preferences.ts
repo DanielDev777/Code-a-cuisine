@@ -41,6 +41,60 @@ export class Preferences {
 		});
 	}
 
+	createRecipeQuery() {
+		let query = {
+			ingredients: this.transformedIngredientsList(),
+			portions: this.portions.value,
+			people: this.people.value,
+			time: this.determineTime(this.time.value),
+			cuisine: this.cuisine.value,
+			diet: this.diet.value
+		}
+
+		this.sendRecipeQuery(query);
+	}
+
+	determineTime(value: string): string {
+		if (value === 'quick') {
+			return 'Up to 20 minutes';
+		} else if (value === 'medium') {
+			return '25-40 minutes';
+		} else {
+			return 'over 40 minutes';
+		}
+	}
+
+	transformedIngredientsList(): string[] {
+		return this.ingredients().map(element => 
+			`${element.amount}${element.unit} ${element.name}`
+		);
+	}
+
+	async sendRecipeQuery(data: {}) {
+		const url = '/api/webhook-test/28ade059-0774-45dd-a1ea-3f7ba40eef21';
+		console.log('Sending recipe query:', data);
+		try {
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+			
+			const result = await response.json();
+			
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+			
+			return result;
+		} catch (error) {
+            console.error('Error sending recipe query:', error);
+            throw error;
+		}
+	}
+
 	closeModal(): void {
 		this.close.emit();
 	}

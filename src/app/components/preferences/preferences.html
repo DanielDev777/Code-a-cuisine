@@ -71,6 +71,7 @@
 						<div class="options__group">
 							<input
 								type="radio"
+								name="time"
 								[formControl]="time"
 								value="quick"
 								id="quick"
@@ -81,6 +82,7 @@
 						<div class="options__group">
 							<input
 								type="radio"
+								name="time"
 								[formControl]="time"
 								value="medium"
 								id="medium"
@@ -91,6 +93,7 @@
 						<div class="options__group">
 							<input
 								type="radio"
+								name="time"
 								[formControl]="time"
 								value="complex"
 								id="complex"
@@ -100,7 +103,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="option">
+				<div class="options">
 					<h3 class="h5">
 						<img src="img/icons/world.svg" />
 						Cuisine
@@ -110,6 +113,7 @@
 						<div class="options__group">
 							<input
 								type="radio"
+								name="cuisine"
 								[formControl]="cuisine"
 								value="{{ option }}"
 								id="{{ option }}"
@@ -119,7 +123,7 @@
 						}
 					</div>
 				</div>
-				<div class="option">
+				<div class="options">
 					<h3 class="h5">
 						<img src="img/icons/fork_spoon.svg" />
 						Diet preferences
@@ -129,6 +133,7 @@
 						<div class="options__group">
 							<input
 								type="radio"
+								name="diet"
 								[formControl]="diet"
 								value="{{ option }}"
 								id="{{ option }}"
@@ -139,6 +144,9 @@
 					</div>
 				</div>
 			</div>
+			<button class="main-btn btn-green" (click)="createRecipeQuery()">
+				Generate a recipe
+			</button>
 		</div>
 	</div>
 </div>

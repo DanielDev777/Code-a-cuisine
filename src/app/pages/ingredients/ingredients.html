@@ -85,9 +85,9 @@
 			<button class="main-btn btn-green" (click)="showModal()" [class.d-none]="!nextstepAvailable()">
 				Next step
 			</button>
-			<!-- @if (isModalVisible()) { -->
+			@if (isModalVisible()) {
 				<app-preferences (close)="hideModal()" [ingredients]="ingredientsList()"></app-preferences>
-			<!-- } -->
+			}
 		</div>
 	</div>
 </section>
