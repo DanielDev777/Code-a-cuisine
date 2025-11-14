@@ -1,0 +1,133 @@
+<app-header></app-header>
+
+<div class="results-container">
+	@if (isLoading()) {
+		<div class="loading-container">
+			<div class="spinner"></div>
+			<h2>Generating your recipes...</h2>
+			<p>This may take up to 30 seconds</p>
+		</div>
+	} @else if (error()) {
+		<div class="error-container">
+			<h2>Oops! Something went wrong</h2>
+			<p>{{ error() }}</p>
+			<button (click)="goBack()">Go Back</button>
+		</div>
+	} @else if (recipes().length > 0) {
+		<div class="recipes-container">
+			<h1>Your Recipes</h1>
+			
+			@for (recipe of recipes(); track recipe.recipeName) {
+				<div class="recipe-card">
+					<div class="recipe-header">
+						<h2>{{ recipe.recipeName }}</h2>
+						<span class="difficulty">{{ recipe.difficulty }}</span>
+					</div>
+					
+					<p class="description">{{ recipe.description }}</p>
+					
+					<div class="recipe-meta">
+						<div class="meta-item">
+							<strong>Prep:</strong> {{ recipe.prepTime }}
+						</div>
+						<div class="meta-item">
+							<strong>Cook:</strong> {{ recipe.cookTime }}
+						</div>
+						<div class="meta-item">
+							<strong>Total:</strong> {{ recipe.totalTime }}
+						</div>
+						<div class="meta-item">
+							<strong>Servings:</strong> {{ recipe.servings }}
+						</div>
+					</div>
+					
+					<div class="ingredients-section">
+						<h3>Required Ingredients</h3>
+						<ul>
+							@for (ingredient of recipe.requiredIngredients; track ingredient.name) {
+								<li>
+									<strong>{{ ingredient.amount }}</strong> {{ ingredient.name }}
+									@if (ingredient.preparation) {
+										<em>({{ ingredient.preparation }})</em>
+									}
+								</li>
+							}
+						</ul>
+						
+						@if (recipe.optionalIngredients && recipe.optionalIngredients.length > 0) {
+							<h3>Optional Ingredients</h3>
+							<ul class="optional">
+								@for (ingredient of recipe.optionalIngredients; track ingredient.name) {
+									<li>
+										<strong>{{ ingredient.amount }}</strong> {{ ingredient.name }}
+										<em>- {{ ingredient.purpose }}</em>
+									</li>
+								}
+							</ul>
+						}
+					</div>
+					
+					<div class="instructions-section">
+						<h3>Instructions</h3>
+						<ol>
+							@for (instruction of recipe.instructions; track instruction.step) {
+								<li>
+									<div class="instruction-header">
+										<span class="assigned-to">{{ instruction.assignedTo }}</span>
+										<span class="duration">{{ instruction.duration }}</span>
+									</div>
+									<p>{{ instruction.action }}</p>
+									@if (instruction.tip) {
+										<p class="tip">💡 Tip: {{ instruction.tip }}</p>
+									}
+								</li>
+							}
+						</ol>
+					</div>
+					
+					<div class="nutrition-section">
+						<h3>Nutritional Information (per serving)</h3>
+						<div class="nutrition-grid">
+							<div class="nutrition-item">
+								<strong>Energy:</strong> {{ recipe.nutritionalInfo.perServing.energy }}
+							</div>
+							<div class="nutrition-item">
+								<strong>Fat:</strong> {{ recipe.nutritionalInfo.perServing.fat }}
+							</div>
+							<div class="nutrition-item">
+								<strong>Carbs:</strong> {{ recipe.nutritionalInfo.perServing.carbohydrates }}
+							</div>
+							<div class="nutrition-item">
+								<strong>Protein:</strong> {{ recipe.nutritionalInfo.perServing.protein }}
+							</div>
+							<div class="nutrition-item">
+								<strong>Fiber:</strong> {{ recipe.nutritionalInfo.perServing.fiber }}
+							</div>
+							<div class="nutrition-item">
+								<strong>Sodium:</strong> {{ recipe.nutritionalInfo.perServing.sodium }}
+							</div>
+						</div>
+					</div>
+					
+					@if (recipe.tips && recipe.tips.length > 0) {
+						<div class="tips-section">
+							<h3>Tips</h3>
+							<ul>
+								@for (tip of recipe.tips; track tip) {
+									<li>{{ tip }}</li>
+								}
+							</ul>
+						</div>
+					}
+					
+					@if (recipe.storage) {
+						<div class="storage-section">
+							<h3>Storage</h3>
+							<p>{{ recipe.storage }}</p>
+						</div>
+					}
+				</div>
+			}
+		</div>
+	}
+</div>

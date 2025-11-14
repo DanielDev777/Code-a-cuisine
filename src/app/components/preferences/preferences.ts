@@ -1,7 +1,9 @@
-import { Component, effect, input, output } from '@angular/core';
+import { Component, effect, inject, input, output } from '@angular/core';
 import { Ingredient } from '../../interfaces/ingredient';
 import { Header } from '../../shared/header/header';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecipeAiService } from '../../services/recipe-ai.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-preferences',
@@ -10,6 +12,9 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 	styleUrl: './preferences.scss'
 })
 export class Preferences {
+	private recipeAiService = inject(RecipeAiService);
+	private router = inject(Router);
+	
 	close = output<void>();
 	ingredients = input.required<Ingredient[]>();
 
@@ -26,14 +31,9 @@ export class Preferences {
 		'japanese',
 		'gourmet',
 		'fusion'
-	]
+	];
 
-	dietOptions: string[] = [
-		'vegetarian',
-		'vegan',
-		'keto',
-		'no preferences'
-	]
+	dietOptions: string[] = ['vegetarian', 'vegan', 'keto', 'no preferences'];
 
 	constructor() {
 		effect(() => {
@@ -41,77 +41,63 @@ export class Preferences {
 		});
 	}
 
-	createRecipeQuery() {
-		let query = {
+	createRecipeQuery(): void {
+		const queryData = this.buildQueryData();
+		const prompt = this.recipeAiService.generatePrompt(queryData);
+		
+		this.router.navigate(['/results']);
+		this.sendRecipeRequest(prompt);
+	}
+
+	private buildQueryData() {
+		return {
 			ingredients: this.transformedIngredientsList(),
 			portions: this.portions.value,
 			people: this.people.value,
 			time: this.determineTime(this.time.value),
 			cuisine: this.cuisine.value,
 			diet: this.diet.value
-		}
+		};
+	}
 
-		this.sendRecipeQuery(query);
+	private sendRecipeRequest(prompt: string): void {
+		this.recipeAiService.sendRecipeQuery({
+			prompt,
+			model: 'gpt-5-nano',
+			temperature: 0.7,
+			maxTokens: 3000
+		}).catch(error => console.error('Failed to generate recipes:', error));
 	}
 
 	determineTime(value: string): string {
-		if (value === 'quick') {
-			return 'Up to 20 minutes';
-		} else if (value === 'medium') {
-			return '25-40 minutes';
-		} else {
-			return 'over 40 minutes';
-		}
+		const timeMap: Record<string, string> = {
+			'quick': 'Up to 20 minutes',
+			'medium': '25-40 minutes'
+		};
+		return timeMap[value] || 'over 40 minutes';
 	}
 
 	transformedIngredientsList(): string[] {
-		return this.ingredients().map(element => 
-			`${element.amount}${element.unit} ${element.name}`
+		return this.ingredients().map(
+			(element) => `${element.amount}${element.unit} ${element.name}`
 		);
-	}
-
-	async sendRecipeQuery(data: {}) {
-		const url = '/api/webhook-test/28ade059-0774-45dd-a1ea-3f7ba40eef21';
-		console.log('Sending recipe query:', data);
-		try {
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(data)
-			});
-			
-			const result = await response.json();
-			
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-			
-			return result;
-		} catch (error) {
-            console.error('Error sending recipe query:', error);
-            throw error;
-		}
 	}
 
 	closeModal(): void {
 		this.close.emit();
 	}
 
-	increaseValue(control: FormControl<number>) {
-		const currentValue = control.value;
-		control.setValue(currentValue + 1);
+	increaseValue(control: FormControl<number>): void {
+		control.setValue(control.value + 1);
 	}
 
-	decreaseValue(control: FormControl<number>) {
-		const currentValue = control.value;
-		if (currentValue > 1) {
-			control.setValue(currentValue - 1);
+	decreaseValue(control: FormControl<number>): void {
+		if (control.value > 1) {
+			control.setValue(control.value - 1);
 		}
 	}
 
-	capitalize(string: string) {
-    	return string.charAt(0).toUpperCase() + string.slice(1)
+	capitalize(string: string): string {
+		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 }
