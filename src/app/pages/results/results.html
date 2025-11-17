@@ -1,20 +1,93 @@
-<app-header></app-header>
+<section>
+	<app-header class="green-bg"></app-header>
 
-<div class="results-container">
-	@if (isLoading()) {
+		<button
+			(click)="loadMockData()"
+			style="
+				position: fixed;
+				top: 80px;
+				right: 20px;
+				z-index: 1000;
+				padding: 10px;
+				background: #000;
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+			"
+		>
+			Load Mock Data
+		</button>
+
+		@if (isLoading()) {
 		<div class="loading-container">
-			<div class="spinner"></div>
-			<h2>Generating your recipes...</h2>
-			<p>This may take up to 30 seconds</p>
+			<img
+				src="img/gif/generating.gif"
+				alt="Generating recipes"
+				class="loading-gif"
+			/>
+			<h1>Generating your recipes...</h1>
+			<p>Depending on your ingredients this may take longer...</p>
 		</div>
-	} @else if (error()) {
+		} @else if (error()) {
 		<div class="error-container">
-			<h2>Oops! Something went wrong</h2>
+			<h1>Oops! Something went wrong</h1>
 			<p>{{ error() }}</p>
 			<button (click)="goBack()">Go Back</button>
 		</div>
-	} @else if (recipes().length > 0) {
-		<div class="recipes-container">
+		} @else if (recipes().length > 0) {
+		<div class="container">
+			<div class="results">
+				<div class="results__head">
+					<div class="results__welcome">
+						<h1>The recipe results</h1>
+						<p class="h5">
+							We took what you have and let our AI do the
+							thinking.<br />
+							Hera are {{ recipes().length }} easy recipes you can
+							make right now!
+						</p>
+						<div class="results__specs">
+							<span class="spec pill-creme">{{
+								recipeAiService.capitalize(cuisine())
+							}}</span>
+							<span class="spec pill-creme">{{
+								recipeAiService.capitalize(timePreference())
+							}}</span>
+							@if (diet() && diet() != 'no preferences') {
+								<span class="spec pill-creme">{{
+									recipeAiService.capitalize(diet())
+								}}</span>
+							}
+						</div>
+					</div>
+					<img src="img/results/ai_dish.jpg">
+				</div>
+				<div class="recipes">
+					@for (recipe of recipes(); track recipe.recipeName) {
+						<div class="recipes__card">
+							<div class="recipes__card--head h5">
+								<img src="img/icons/dish.svg">
+								Recipe {{ $index + 1 }}
+							</div>
+							<div class="recipes__card--body">
+								<h2 class="h4">{{ recipe.recipeName }}</h2>
+								<span class="recipes__card--time">
+									<img src="img/icons/time.svg">
+									Cooking time: {{ recipe.cookTime }}
+								</span>
+								<button class="main-btn btn-creme--small" (click)="showModal(recipe)">View</button>
+							</div>
+						</div>
+					}
+					@if (isModalVisible() && selectedRecipe()) {
+						<app-recipe-modal (close)="hideModal()" [recipe]="selectedRecipe()!"></app-recipe-modal>
+					}
+				</div>
+			</div>
+		</div>
+
+		<!-- <div class="recipes-container">
 			<h1>Your Recipes</h1>
 			
 			@for (recipe of recipes(); track recipe.recipeName) {
@@ -128,6 +201,6 @@
 					}
 				</div>
 			}
-		</div>
-	}
-</div>
+		</div> -->
+		}
+</section>

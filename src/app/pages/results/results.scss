@@ -1,233 +1,66 @@
-.results-container {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 2rem;
+@use '../../../vars.scss' as v;
+@use '../../../mixins.scss' as m;
+
+section {
+	background: v.$olivegreen;
+	height: 100vh;
+	overflow: hidden;
+	padding: v.$spacing-xxl 0;
+	.container {
+		height: 100%;
+	}
 }
 
-.loading-container,
-.error-container,
-.empty-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	min-height: 60vh;
-	text-align: center;
-	
-	h2 {
-		font-size: 2rem;
-		margin-bottom: 1rem;
-	}
-	
-	button {
-		margin-top: 1.5rem;
-		padding: 0.75rem 2rem;
-		font-size: 1rem;
-		cursor: pointer;
-		border: none;
-		border-radius: 8px;
-		background-color: #000;
-		color: #fff;
-		
-		&:hover {
-			background-color: #333;
+.results {
+	&__head {
+		@include m.flexBox($jc: space-between, $g: v.$spacing-xl);
+		* {
+			&:not(.pill-creme) {
+				color: #fff;
+			}
+		}
+		img {
+			border-radius: v.$card-radius;
 		}
 	}
-}
-
-.spinner {
-	width: 50px;
-	height: 50px;
-	border: 5px solid #f3f3f3;
-	border-top: 5px solid #000;
-	border-radius: 50%;
-	animation: spin 1s linear infinite;
-	margin-bottom: 1.5rem;
-}
-
-@keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
-}
-
-.recipes-container {
-	h1 {
-		font-size: 2.5rem;
-		margin-bottom: 2rem;
-		text-align: center;
+	&__welcome {
+		@include m.flexBox($fd:column, $jc: flex-start, $ai: flex-start, $g: v.$spacing-md);
+	} 
+	&__specs {
+		@include m.flexBox($jc: flex-start, $g: v.$spacing-sm);
 	}
 }
 
-.recipe-card {
-	background: #fff;
-	border: 1px solid #ddd;
-	border-radius: 12px;
-	padding: 2rem;
-	margin-bottom: 2rem;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-	
-	.recipe-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 1rem;
-		
-		h2 {
-			font-size: 1.8rem;
-			margin: 0;
-		}
-		
-		.difficulty {
-			padding: 0.5rem 1rem;
-			border-radius: 20px;
-			font-size: 0.9rem;
+.recipes {
+	margin-top: v.$spacing-xl;
+	@include m.flexBox($jc: space-between, $g: v.$spacing-md);
+	&__card {
+		padding: v.$spacing-mdg v.$spacing-md;
+		background: v.$card-bg;
+		border-radius: v.$card-radius;
+		flex: 0 0 30%;
+		max-width: 30%;
+		&--head {
+			margin-bottom: v.$spacing-sm;
+			color: v.$green;
 			font-weight: 600;
-			background-color: #f0f0f0;
+			@include m.flexBox($jc: flex-start, $g: v.$spacing-sm);
+		}
+		&--body {
+			color: v.$darkgreen;
+		}
+		&--time {
+			margin: v.$spacing-sm 0 v.$spacing-mdg;
+			@include m.flexBox($jc: flex-start, $g: v.$spacing-sm);
 		}
 	}
-	
-	.description {
-		font-size: 1.1rem;
-		color: #666;
-		margin-bottom: 1.5rem;
-	}
-	
-	.recipe-meta {
-		display: flex;
-		gap: 1.5rem;
-		padding: 1rem;
-		background-color: #f9f9f9;
-		border-radius: 8px;
-		margin-bottom: 1.5rem;
-		
-		.meta-item {
-			font-size: 0.95rem;
-			
-			strong {
-				color: #333;
-			}
-		}
-	}
-	
-	h3 {
-		font-size: 1.3rem;
-		margin-top: 2rem;
-		margin-bottom: 1rem;
-		border-bottom: 2px solid #000;
-		padding-bottom: 0.5rem;
-	}
-	
-	.ingredients-section {
-		ul {
-			list-style: none;
-			padding: 0;
-			
-			li {
-				padding: 0.5rem 0;
-				border-bottom: 1px solid #eee;
-				
-				strong {
-					color: #000;
-				}
-				
-				em {
-					color: #666;
-					font-size: 0.9rem;
-				}
-			}
-			
-			&.optional {
-				li {
-					opacity: 0.8;
-				}
-			}
-		}
-	}
-	
-	.instructions-section {
-		ol {
-			padding-left: 1.5rem;
-			
-			li {
-				margin-bottom: 1.5rem;
-				
-				.instruction-header {
-					display: flex;
-					justify-content: space-between;
-					margin-bottom: 0.5rem;
-					font-size: 0.9rem;
-					
-					.assigned-to {
-						background-color: #000;
-						color: #fff;
-						padding: 0.25rem 0.75rem;
-						border-radius: 12px;
-						font-weight: 600;
-					}
-					
-					.duration {
-						color: #666;
-						font-style: italic;
-					}
-				}
-				
-				p {
-					margin: 0.5rem 0;
-				}
-				
-				.tip {
-					background-color: #fffbea;
-					padding: 0.75rem;
-					border-left: 3px solid #ffd700;
-					margin-top: 0.5rem;
-					font-size: 0.95rem;
-				}
-			}
-		}
-	}
-	
-	.nutrition-section {
-		.nutrition-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-			gap: 1rem;
-			
-			.nutrition-item {
-				padding: 0.75rem;
-				background-color: #f9f9f9;
-				border-radius: 8px;
-				
-				strong {
-					color: #000;
-				}
-			}
-		}
-	}
-	
-	.tips-section {
-		ul {
-			list-style: disc;
-			padding-left: 1.5rem;
-			
-			li {
-				padding: 0.5rem 0;
-			}
-		}
-	}
-	
-	.storage-section {
-		background-color: #f0f7ff;
-		padding: 1rem;
-		border-radius: 8px;
-		border-left: 3px solid #0066cc;
-		
-		h3 {
-			margin-top: 0;
-			border: none;
-		}
-		
-		p {
-			margin: 0;
-		}
-	}
+}
+
+
+
+.loading-gif {
+	width: 200px;
+	height: 200px;
+	margin-bottom: 1.5rem;
+	object-fit: contain;
 }

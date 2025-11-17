@@ -19,6 +19,18 @@
 }
 // Background //
 
+// Button //
+@mixin btnCreme() {
+	background-color: v.$creme;
+	color: v.$green;
+	font-size: 1.2rem;
+	transition: all 0.5s ease-out;
+	&:hover {
+		background: v.$creme-hover;
+	}
+}
+// Button //
+
 // Forms //
 @mixin ingredientInputStyling() {
 	input,

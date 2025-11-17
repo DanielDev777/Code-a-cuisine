@@ -53,10 +53,15 @@ export class RecipeAiService {
 	private recipesSignal = signal<Recipe[]>([]);
 	private errorSignal = signal<string | null>(null);
 
-	// Public getters
 	isLoading = this.isLoadingSignal.asReadonly();
 	recipes = this.recipesSignal.asReadonly();
 	error = this.errorSignal.asReadonly();
+
+	setMockRecipes(recipes: Recipe[]): void {
+		this.recipesSignal.set(recipes);
+		this.isLoadingSignal.set(false);
+		this.errorSignal.set(null);
+	}
 
 	generatePrompt(data: {
 		ingredients: string[];
@@ -81,7 +86,7 @@ INSTRUCTIONS:
 3. Ensure each recipe fits within the specified time limit
 4. Respect the dietary preferences (${data.diet})
 5. Scale each recipe for exactly ${data.portions} portions
-6. If ${data.people} people are cooking together, assign specific tasks to each person (Person 1, Person 2, etc.) to work in parallel
+6. If ${data.people} people are cooking together, assign specific tasks to each person (Cook 1, Cook 2, etc.) to work in parallel
 7. Provide step-by-step instructions that are clear and easy to follow
 8. Suggest optional ingredients (like spices or garnishes) that would enhance each dish but are not essential
 9. Only provide fewer than 3 recipes if it's absolutely impossible to create 3 different viable options with the given ingredients
@@ -117,7 +122,7 @@ Respond ONLY with valid JSON in exactly this structure (no additional text befor
         {
           "step": 1,
           "action": "Detailed instruction for this step",
-          "assignedTo": "Person 1",
+          "assignedTo": "Cook 1",
           "duration": "X minutes",
           "tip": "Optional helpful tip for this step"
         }
@@ -147,7 +152,7 @@ IMPORTANT RULES:
 - Ensure all JSON is valid and properly escaped
 - All numerical values in nutritionalInfo should be realistic estimates
 - For ${data.people} people cooking: distribute tasks efficiently across all people so they can work simultaneously
-- If only 1 person is cooking, assign all steps to "Person 1"
+- If only 1 person is cooking, assign all steps to "Cook 1"
 - Keep cooking time within ${data.time}
 - Make sure each recipe follows ${data.diet} dietary requirements strictly
 - Provide exactly 3 recipes unless absolutely impossible with the given constraints`;
@@ -178,7 +183,7 @@ IMPORTANT RULES:
 
 	private createRequestTimeout(): { controller: AbortController; timeoutId: number } {
 		const controller = new AbortController();
-		const timeoutId = setTimeout(() => controller.abort(), 180000);
+		const timeoutId = setTimeout(() => controller.abort(), 300000);
 		return { controller, timeoutId };
 	}
 
@@ -239,5 +244,9 @@ IMPORTANT RULES:
 		
 		const errorMsg = error instanceof Error ? error.message : 'Unknown error occurred';
 		this.errorSignal.set(errorMsg);
+	}
+
+	capitalize(string: string): string {
+		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 }

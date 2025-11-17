@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 	styleUrl: './preferences.scss'
 })
 export class Preferences {
-	private recipeAiService = inject(RecipeAiService);
+	recipeAiService = inject(RecipeAiService);
 	private router = inject(Router);
 	
 	close = output<void>();
@@ -65,7 +65,7 @@ export class Preferences {
 			prompt,
 			model: 'gpt-5-nano',
 			temperature: 0.7,
-			maxTokens: 3000
+			maxTokens: 3500
 		}).catch(error => console.error('Failed to generate recipes:', error));
 	}
 
@@ -95,9 +95,5 @@ export class Preferences {
 		if (control.value > 1) {
 			control.setValue(control.value - 1);
 		}
-	}
-
-	capitalize(string: string): string {
-		return string.charAt(0).toUpperCase() + string.slice(1);
 	}
 }

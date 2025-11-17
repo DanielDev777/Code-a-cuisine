@@ -1,5 +1,6 @@
 @use './fontimport.scss';
 @use './vars.scss' as v;
+@use './mixins.scss' as m;
 // Include theming for Angular Material with `mat.theme()`.
 // This Sass mixin will define CSS variables that are used for styling Angular Material
 // components according to the Material 3 design spec.
@@ -34,31 +35,53 @@
 //   margin: 0;
 // }
 
-
 // General //
-html, body {
-    box-sizing: border-box;
-    margin: 0;
+html,
+body {
+	box-sizing: border-box;
+	margin: 0;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
 	box-sizing: inherit;
 }
 
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, p {
-    margin: 0;
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+p {
+	margin: 0;
 }
 
-h1, h2, h3, h4, p, a, span, div, button {
+h1,
+h2,
+h3,
+h4,
+p,
+a,
+span,
+div,
+button {
 	font-family: 'Quicksand', sans-serif;
 }
 
-h1, .h1, h2, .h2 {
-    font-size: 4rem;
+h1,
+.h1,
+h2,
+.h2 {
+	font-size: 4rem;
 }
 
-h3, .h3 {
-    font-size: 3rem;
+h3,
+.h3 {
+	font-size: 3rem;
 	@media (max-width: 991px) {
 		font-size: 2rem;
 	}
@@ -67,16 +90,18 @@ h3, .h3 {
 	}
 }
 
-h4, .h4 {
-    font-size: 2rem;
+h4,
+.h4 {
+	font-size: 2rem;
 }
 
-h5, .h5 {
+h5,
+.h5 {
 	font-size: 1.5rem;
 }
 
 a {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .ubuntu {
@@ -84,9 +109,9 @@ a {
 }
 
 .container {
-    max-width: 1440px;
-    padding: 0 20px;
-    margin: 0 auto;
+	max-width: 1440px;
+	padding: 0 20px;
+	margin: 0 auto;
 }
 
 section {
@@ -102,27 +127,29 @@ button {
 
 // Buttons //
 .main-btn {
-    padding: 1rem 1.5rem;
-    border: none;
+	padding: 1rem 1.5rem;
+	border: none;
+
 }
 
 .btn-creme {
-    background-color: v.$creme;
-    color: v.$green;
-    font-size: 1.2rem;
-	transition: all .5s ease-out;
+	@include m.btnCreme();
+	&--small {
+		@include m.btnCreme();
+		padding: .5rem 1rem;
+		font-weight: 600;
+	}
 	&:hover {
-		background: v.$creme-hover;
 		padding: 1rem 2rem;
 		font-weight: 600;
 	}
 }
 .btn-green {
-    background-color: v.$olivegreen;
-    color: v.$creme;
-    font-size: 1.2rem;
+	background-color: v.$olivegreen;
+	color: v.$creme;
+	font-size: 1.2rem;
 	font-weight: 500;
-	transition: all .5s ease-out;
+	transition: all 0.5s ease-out;
 	cursor: pointer;
 	&:hover {
 		background-color: v.$green;
@@ -145,5 +172,17 @@ button {
 	padding: v.$spacing-md v.$spacing-mdg;
 	background: v.$olive-light;
 	border-radius: v.$card-radius;
+}
+
+.pill-creme {
+	font-weight: 500;
+	padding: 6px 12px;
+	background-color: v.$creme;
+	border-radius: v.$pill-radius;
+	color: v.$darkgreen;
+	cursor: pointer;
+	&:hover {
+		background-color: v.$creme-hover;
+	}
 }
 // Utility //
