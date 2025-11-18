@@ -91,11 +91,3 @@
 		border: none;
 	}
 }
-
-.back-btn {
-	border: none;
-	background: transparent;
-	font-weight: 500;
-	color: v.$green;
-	@include m.flexBox($jc: flex-start, $ai: center, $g: v.$spacing-xs);
-}

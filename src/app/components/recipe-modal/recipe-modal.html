@@ -1,1 +1,73 @@
-<p>recipe-modal works!</p>
+<div class="modal">
+	<app-header></app-header>
+	<div class="container">
+		<button class="back-btn" (click)="closeModal()">
+			<img src="img/icons/arrow-left.svg" alt="Close" />
+			Recipe results
+		</button>
+
+		<div class="recipe">
+			<div class="recipe__head">
+				<div class="recipe__head--main">
+					<div class="recipe__time">
+						<img src="img/icons/time.svg" />
+						Cooking time: {{ recipe().cookTime }}
+					</div>
+					<h2>{{ recipe().recipeName }}</h2>
+					<div class="recipe__chefs">
+						People cooking: {{ recipe().numberOfCooks }}
+						<span>
+							<img src="img/icons/chef_hat.png" />
+							Chef 1
+						</span>
+						@if (recipe().numberOfCooks == 2) {
+						<span>
+							<img src="img/icons/chef_spork.png" />
+							Chef 2
+						</span>
+						}
+					</div>
+				</div>
+				<div class="recipe__head--info">
+					<div class="recipe__tags">
+						<span class="pill-creme">{{ recipe().cuisine }}</span>
+						<span class="pill-creme">{{ recipe().timePreference }}</span>
+						@if (recipe().diet && recipe().diet !== 'no preferences') {
+							<span class="pill-creme">{{ recipe().diet }}</span>
+						}
+					</div>
+					<div class="recipe__nutrition">
+						<h4>Nutritional information</h4>
+						<div class="recipe__nutrition-grid">
+							<div>
+								<span>Energie</span>
+								<strong>{{
+									recipe().nutritionalInfo.perServing.energy
+								}}</strong>
+							</div>
+							<div>
+								<span>Protein</span>
+								<strong>{{
+									recipe().nutritionalInfo.perServing.protein
+								}}</strong>
+							</div>
+							<div>
+								<span>Fat</span>
+								<strong>{{
+									recipe().nutritionalInfo.perServing.fat
+								}}</strong>
+							</div>
+							<div>
+								<span>Carbs</span>
+								<strong>{{
+									recipe().nutritionalInfo.perServing
+										.carbohydrates
+								}}</strong>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

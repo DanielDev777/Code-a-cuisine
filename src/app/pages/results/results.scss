@@ -48,19 +48,28 @@ section {
 		}
 		&--body {
 			color: v.$darkgreen;
+			min-height: 260px;
+			@include m.flexBox($fd: column, $ai: flex-start, $jc: flex-start);
 		}
 		&--time {
-			margin: v.$spacing-sm 0 v.$spacing-mdg;
+			margin: auto 0 v.$spacing-mdg;
 			@include m.flexBox($jc: flex-start, $g: v.$spacing-sm);
 		}
 	}
 }
 
 
-
+.loading-container {
+	@include m.flexBox($fd:column, $g: v.$spacing-md);
+}
 .loading-gif {
-	width: 200px;
-	height: 200px;
+	&-container {
+		background: v.$olive-light;
+		border-radius: v.$card-radius;
+		padding: v.$spacing-md;
+	}
+	width: 500px;
+	height: 500px;
 	margin-bottom: 1.5rem;
 	object-fit: contain;
 }

@@ -1,0 +1,73 @@
+@use '../../../vars.scss' as v;
+@use '../../../mixins.scss' as m;
+
+.modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
+	padding: v.$spacing-md;
+	background: #fff;
+	width: 100%;
+	height: 100%;
+	padding: v.$spacing-xl 0;
+	.back-btn {
+		margin-bottom: calc(v.$spacing-mdg * 2);
+	}
+}
+
+.recipe {
+	padding: v.$spacing-lg;
+	background: v.$creme-light;
+	border-radius: v.$card-radius;
+	&__head {
+		padding: v.$spacing-md;
+		background: v.$creme;
+		border-radius: v.$card-radius;
+		@include m.flexBox($jc: space-between);
+		&--main {
+			flex: 0 0 60%;
+			max-width: 60%;
+			h2 {
+				color: v.$darkgreen;
+			}
+		}
+		&--info {
+			flex: 0 0 30%;
+			max-width: 30%;
+			* {
+				color: v.$darkgreen;
+			}
+		}
+	}
+	&__time,
+	&__chefs { 
+		* {
+			color: v.$olivegreen;
+		}
+	}
+	&__time {
+		@include m.flexBox($jc: flex-start, $g: v.$spacing-sm);
+	}
+}
+
+// Scrollbar styling
+.modal::-webkit-scrollbar {
+	width: 8px;
+}
+
+.modal::-webkit-scrollbar-track {
+	background: v.$creme;
+	border-radius: v.$card-radius;
+}
+
+.modal::-webkit-scrollbar-thumb {
+	background: v.$olivegreen;
+	border-radius: v.$card-radius;
+
+	&:hover {
+		background: v.$green;
+	}
+}

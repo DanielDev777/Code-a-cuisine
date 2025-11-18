@@ -76,7 +76,7 @@ h1,
 .h1,
 h2,
 .h2 {
-	font-size: 4rem;
+	font-size: 3.5rem;
 }
 
 h3,
@@ -160,6 +160,14 @@ button {
 	border: 0;
 	background-color: transparent;
 	cursor: pointer;
+}
+
+.back-btn {
+	border: none;
+	background: transparent;
+	font-weight: 500;
+	color: v.$green;
+	@include m.flexBox($jc: flex-start, $ai: center, $g: v.$spacing-xs);
 }
 // Buttons //
 

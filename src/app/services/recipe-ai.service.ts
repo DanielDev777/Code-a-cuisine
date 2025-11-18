@@ -1,49 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-
-export interface Recipe {
-	recipeName: string;
-	description: string;
-	prepTime: string;
-	cookTime: string;
-	totalTime: string;
-	servings: number;
-	difficulty: string;
-	requiredIngredients: {
-		amount: string;
-		name: string;
-		preparation: string;
-	}[];
-	optionalIngredients: {
-		amount: string;
-		name: string;
-		purpose: string;
-	}[];
-	instructions: {
-		step: number;
-		action: string;
-		assignedTo: string;
-		duration: string;
-		tip: string;
-	}[];
-	nutritionalInfo: {
-		perServing: {
-			energy: string;
-			fat: string;
-			saturatedFat: string;
-			carbohydrates: string;
-			sugar: string;
-			protein: string;
-			fiber: string;
-			sodium: string;
-		};
-	};
-	tips: string[];
-	storage: string;
-}
-
-export interface RecipeResponse {
-	recipes: Recipe[];
-}
+import { Recipe, RecipeResponse } from '../interfaces/recipe';
 
 @Injectable({
 	providedIn: 'root'
@@ -86,8 +42,8 @@ INSTRUCTIONS:
 3. Ensure each recipe fits within the specified time limit
 4. Respect the dietary preferences (${data.diet})
 5. Scale each recipe for exactly ${data.portions} portions
-6. If ${data.people} people are cooking together, assign specific tasks to each person (Cook 1, Cook 2, etc.) to work in parallel
-7. Provide step-by-step instructions that are clear and easy to follow
+6. If ${data.people} people are cooking together, assign specific tasks to each person (Chef 1, Chef 2, etc.) to work in parallel
+7. Provide detailed step-by-step instructions - don't make steps too short, combine related actions into logical steps
 8. Suggest optional ingredients (like spices or garnishes) that would enhance each dish but are not essential
 9. Only provide fewer than 3 recipes if it's absolutely impossible to create 3 different viable options with the given ingredients
 
@@ -103,7 +59,10 @@ Respond ONLY with valid JSON in exactly this structure (no additional text befor
       "cookTime": "X minutes",
       "totalTime": "X minutes",
       "servings": ${data.portions},
-      "difficulty": "Easy/Medium/Hard",
+      "timePreference": "${data.time}",
+      "cuisine": "${data.cuisine}",
+      "diet": "${data.diet}",
+      "numberOfCooks": ${data.people},
       "requiredIngredients": [
         {
           "amount": "quantity with unit",
@@ -122,7 +81,7 @@ Respond ONLY with valid JSON in exactly this structure (no additional text befor
         {
           "step": 1,
           "action": "Detailed instruction for this step",
-          "assignedTo": "Cook 1",
+          "assignedTo": "Chef 1",
           "duration": "X minutes",
           "tip": "Optional helpful tip for this step"
         }
@@ -152,9 +111,15 @@ IMPORTANT RULES:
 - Ensure all JSON is valid and properly escaped
 - All numerical values in nutritionalInfo should be realistic estimates
 - For ${data.people} people cooking: distribute tasks efficiently across all people so they can work simultaneously
-- If only 1 person is cooking, assign all steps to "Cook 1"
+- If only 1 person is cooking, assign all steps to "Chef 1"
 - Keep cooking time within ${data.time}
+- Make instructions detailed and comprehensive - combine related actions into logical steps instead of breaking them down too much
+- Every instruction MUST have a "duration" field (e.g., "5 minutes") and a "tip" field (can be empty string "" if no tip)
+- Every optionalIngredient MUST have a "purpose" field explaining why it enhances the dish
+- nutritionalInfo MUST be nested under "perServing" and include all fields: energy, fat, saturatedFat, carbohydrates, sugar, protein, fiber, sodium
+- MUST include "prepTime", "totalTime", and "tips" array for every recipe
 - Make sure each recipe follows ${data.diet} dietary requirements strictly
+- Always include timePreference as "${data.time}", cuisine as "${data.cuisine}", diet as "${data.diet}", and numberOfCooks as ${data.people}
 - Provide exactly 3 recipes unless absolutely impossible with the given constraints`;
 	}
 
