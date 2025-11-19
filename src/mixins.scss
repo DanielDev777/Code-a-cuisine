@@ -9,6 +9,17 @@
 	flex-wrap: $wr;
 	gap: $g;
 }
+
+@mixin pill($bc, $fc, $hc) {
+	font-weight: 500;
+	padding: 6px 12px;
+	background-color: $bc;
+	border-radius: v.$pill-radius;
+	color: $fc;
+	&:hover {
+		background-color: $hc;
+	}
+}
 // General //
 
 // Background //
@@ -28,6 +39,13 @@
 	&:hover {
 		background: v.$creme-hover;
 	}
+}
+
+@mixin likeBtn() {
+	@include flexBox();
+	border: none;
+	background-color: transparent;
+	padding: 0;
 }
 // Button //
 

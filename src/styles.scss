@@ -104,6 +104,10 @@ a {
 	text-decoration: none;
 }
 
+a, button, label {
+	cursor: pointer;
+}
+
 .ubuntu {
 	font-family: 'Ubuntu', sans-serif;
 }
@@ -183,14 +187,9 @@ button {
 }
 
 .pill-creme {
-	font-weight: 500;
-	padding: 6px 12px;
-	background-color: v.$creme;
-	border-radius: v.$pill-radius;
-	color: v.$darkgreen;
-	cursor: pointer;
-	&:hover {
-		background-color: v.$creme-hover;
-	}
+	@include m.pill($bc: v.$creme, $fc: v.$darkgreen, $hc: v.$creme-hover);
+}
+.pill-olive {
+	@include m.pill($bc: v.$olive-light, $fc: v.$darkgreen, $hc: v.$olivegreen);
 }
 // Utility //

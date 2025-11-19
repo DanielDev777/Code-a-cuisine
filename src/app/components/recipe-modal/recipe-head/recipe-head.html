@@ -1,0 +1,57 @@
+<div class="recipe__head">
+	<div class="recipe__head--main">
+		<div class="recipe__time">
+			<img src="img/icons/time.svg" />
+			Cooking time: {{ recipe().cookTime }}
+		</div>
+		<h2>{{ recipe().recipeName }}</h2>
+		<div class="recipe__chefs">
+			People cooking: {{ recipe().numberOfCooks }}
+			<span>
+				<img src="img/icons/chef_hat.png" />
+				Chef 1
+			</span>
+			@if (recipe().numberOfCooks == 2) {
+			<span>
+				<img src="img/icons/chef_spork.png" />
+				Chef 2
+			</span>
+			}
+		</div>
+	</div>
+	<div class="recipe__head--info">
+		<div class="recipe__tags">
+			@if (recipe().diet && recipe().diet !== 'no preferences') {
+			<span class="pill-olive">{{ recipe().diet }}</span>
+			}
+			<span class="pill-olive">{{ getTimePreference() }}</span>
+			<span class="pill-olive">
+				<button class="like-btn">
+					<img src="img/icons/heart-olive.svg" />
+				</button>
+				50
+			</span>
+		</div>
+		<div class="recipe__nutrition">
+			<p>Nutritional information</p>
+			<div class="recipe__nutrition--grid">
+				<div>
+					<span class="h5">Energie</span>
+					{{ recipe().nutritionalInfo.perServing.energy }}
+				</div>
+				<div>
+					<span class="h5">Protein</span>
+					{{ recipe().nutritionalInfo.perServing.protein }}
+				</div>
+				<div>
+					<span class="h5">Fat</span>
+					{{ recipe().nutritionalInfo.perServing.fat }}
+				</div>
+				<div>
+					<span class="h5">Carbs</span>
+					{{ recipe().nutritionalInfo.perServing.carbohydrates }}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

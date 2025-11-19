@@ -27,100 +27,93 @@ export class RecipeAiService {
 		cuisine: string;
 		diet: string;
 	}): string {
-		return `You are a professional chef assistant. Generate THREE different recipe options based on the following requirements:
+		return `You are a professional chef assistant. Generate 3 recipe options based on:
 
-INGREDIENTS AVAILABLE: ${data.ingredients.join(', ')}
-PORTIONS NEEDED: ${data.portions}
-NUMBER OF PEOPLE COOKING: ${data.people}
+INGREDIENTS: ${data.ingredients.join(', ')}
+PORTIONS: ${data.portions}
 COOKING TIME LIMIT: ${data.time}
-CUISINE TYPE: ${data.cuisine}
-DIETARY PREFERENCES: ${data.diet}
+COOKS: ${data.people}
+CUISINE: ${data.cuisine}
+DIET: ${data.diet}
 
-INSTRUCTIONS:
-1. Generate 3 different recipes that use the available ingredients in different ways
-2. Each recipe should offer variety (different cooking methods, flavor profiles, or complexity)
-3. Ensure each recipe fits within the specified time limit
-4. Respect the dietary preferences (${data.diet})
-5. Scale each recipe for exactly ${data.portions} portions
-6. If ${data.people} people are cooking together, assign specific tasks to each person (Chef 1, Chef 2, etc.) to work in parallel
-7. Provide detailed step-by-step instructions - don't make steps too short, combine related actions into logical steps
-8. Suggest optional ingredients (like spices or garnishes) that would enhance each dish but are not essential
-9. Only provide fewer than 3 recipes if it's absolutely impossible to create 3 different viable options with the given ingredients
+INSTRUCTIONS
+Ingredients
 
-RESPONSE FORMAT:
-Respond ONLY with valid JSON in exactly this structure (no additional text before or after):
+1. Ingredients listed are available, not mandatory. Use only what fits the recipe concept.
+2. You may reduce quantities to realistic levels.
+3. Avoid nontraditional heavy-starch mixes (e.g., pasta + potatoes) unless part of traditional or intentional fusion cuisine. Use small amounts if included.
+4. If an ingredient clashes with the cuisine, you may omit it or move it to optional.
+5. Follow the cuisine style unless fusion makes more sense given the ingredients.
+
+Recipes
+6. Provide 3 distinct recipes (different techniques, flavors, or complexity).
+7. Keep within the time limit (${data.time}) and the dietary preference (${data.diet}).
+8. Scale each recipe to exactly ${data.portions} portions.
+9. If more than 1 cook: assign parallel tasks labeled Chef 1, Chef 2, etc.
+10. Use combined, detailed steps (avoid very short steps).
+11. Suggest optional ingredients that enhance flavor.
+
+Output Requirements
+Return only valid JSON with this structure:
 
 {
   "recipes": [
     {
-      "recipeName": "Name of the dish",
-      "description": "Brief 1-2 sentence description of the dish",
-      "prepTime": "X minutes",
-      "cookTime": "X minutes",
-      "totalTime": "X minutes",
+      "recipeName": "",
+      "description": "",
+      "prepTime": "",
+      "cookTime": "",
+      "totalTime": "",
       "servings": ${data.portions},
       "timePreference": "${data.time}",
       "cuisine": "${data.cuisine}",
       "diet": "${data.diet}",
       "numberOfCooks": ${data.people},
       "requiredIngredients": [
-        {
-          "amount": "quantity with unit",
-          "name": "ingredient name",
-          "preparation": "how to prepare (e.g., 'diced', 'chopped')"
-        }
+        { "amount": "", "name": "", "preparation": "" }
       ],
       "optionalIngredients": [
-        {
-          "amount": "quantity with unit",
-          "name": "ingredient name",
-          "purpose": "why this enhances the dish"
-        }
+        { "amount": "", "name": "", "purpose": "" }
       ],
       "instructions": [
-        {
-          "step": 1,
-          "action": "Detailed instruction for this step",
-          "assignedTo": "Chef 1",
-          "duration": "X minutes",
-          "tip": "Optional helpful tip for this step"
-        }
+        { "step": 1, "action": "", "assignedTo": "Chef 1", "duration": "", "tip": "" }
       ],
       "nutritionalInfo": {
         "perServing": {
-          "energy": "X kcal",
-          "fat": "X g",
-          "saturatedFat": "X g",
-          "carbohydrates": "X g",
-          "sugar": "X g",
-          "protein": "X g",
-          "fiber": "X g",
-          "sodium": "X mg"
+          "energy": "",
+          "fat": "",
+          "saturatedFat": "",
+          "carbohydrates": "",
+          "sugar": "",
+          "protein": "",
+          "fiber": "",
+          "sodium": ""
         }
       },
-      "tips": [
-        "General cooking tip or serving suggestion"
-      ],
-      "storage": "How to store leftovers and for how long"
+      "tips": [ "" ],
+      "storage": ""
     }
   ]
 }
 
+
 IMPORTANT RULES:
-- Return ONLY the JSON object with an array of 3 recipes, no markdown formatting, no code blocks, no explanations
-- Ensure all JSON is valid and properly escaped
-- All numerical values in nutritionalInfo should be realistic estimates
-- For ${data.people} people cooking: distribute tasks efficiently across all people so they can work simultaneously
-- If only 1 person is cooking, assign all steps to "Chef 1"
-- Keep cooking time within ${data.time}
-- Make instructions detailed and comprehensive - combine related actions into logical steps instead of breaking them down too much
-- Every instruction MUST have a "duration" field (e.g., "5 minutes") and a "tip" field (can be empty string "" if no tip)
-- Every optionalIngredient MUST have a "purpose" field explaining why it enhances the dish
-- nutritionalInfo MUST be nested under "perServing" and include all fields: energy, fat, saturatedFat, carbohydrates, sugar, protein, fiber, sodium
-- MUST include "prepTime", "totalTime", and "tips" array for every recipe
-- Make sure each recipe follows ${data.diet} dietary requirements strictly
-- Always include timePreference as "${data.time}", cuisine as "${data.cuisine}", diet as "${data.diet}", and numberOfCooks as ${data.people}
-- Provide exactly 3 recipes unless absolutely impossible with the given constraints`;
+- Output only valid JSON, no text before or after.
+- Provide exactly 3 recipes unless impossible.
+- All nutrition values must be realistic.
+- Every instruction step must have a duration and a tip.
+- Every optional ingredient must have a purpose.
+- Include prepTime, totalTime, and a tips array for each recipe.
+- All nutritional fields must appear under nutritionalInfo.perServing.
+- Follow dietary preference ${data.diet} strictly.
+- Always include these fields exactly as written:
+	- timePreference: "${data.time}"
+	- cuisine: "${data.cuisine}"
+	- diet: "${data.diet}"
+	- numberOfCooks: ${data.people}
+	- Keep cooking time within ${data.time}.
+- If ${data.people} > 1, assign tasks across chefs in parallel; if not, assign all to Chef 1.
+- Instructions must be detailed and combined (not too short).`;
 	}
 
 	async sendRecipeQuery(data: object): Promise<RecipeResponse> {

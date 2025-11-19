@@ -1,0 +1,83 @@
+@use '../../../../vars.scss' as v;
+@use '../../../../mixins.scss' as m;
+
+.recipe {
+	&__head {
+		padding: v.$spacing-md;
+		background: v.$creme;
+		border-radius: v.$card-radius;
+		margin-bottom: v.$spacing-lg;
+		@include m.flexBox($jc: space-between);
+		&--main {
+			flex: 0 0 60%;
+			max-width: 60%;
+			h2 {
+				color: v.$darkgreen;
+			}
+		}
+		&--info {
+			flex: 0 0 30%;
+			max-width: 30%;
+			* {
+				color: v.$darkgreen;
+			}
+		}
+	}
+	&__time,
+	&__chefs { 
+		color: v.$olivegreen;
+		font-weight: 500;
+	}
+	&__time {
+		@include m.flexBox($jc: flex-start, $g: v.$spacing-sm);
+	}
+	&__chefs {
+		@include m.flexBox($jc: flex-start, $g: v.$spacing-xs);
+		span {
+			@include m.flexBox($jc: flex-start, $g: v.$spacing-xs);
+			border-radius: v.$card-radius;
+			background: v.$chefOne-bg;
+			width: fit-content;
+			padding: v.$spacing-xs;
+			img {
+				width: 25px;
+			}
+			&:nth-of-type(2) {
+				background: v.$chefTwo-bg;
+			}
+		}
+	}
+	&__tags {
+		@include m.flexBox($jc: flex-start, $g: v.$spacing-xs);
+		margin-bottom: v.$spacing-md;
+		.pill-olive {
+			@include m.flexBox($jc: flex-start, $g: v.$spacing-xs);
+			&:hover {
+				background-color: v.$olive-light;
+			}
+			button {
+				@include m.likeBtn();
+				img {
+					width: 20px;
+				}
+			}
+		}
+	}
+	&__nutrition {
+		p {
+			font-size: 1.1rem;
+			margin-bottom: v.$spacing-sm;
+			font-weight: 500;
+		}
+		&--grid {
+			@include m.flexBox($jc: space-between);
+			> div {
+				@include m.flexBox($fd: column, $jc: center, $g: v.$spacing-sm);
+				font-weight: 500;
+				span {
+					font-weight: 600;
+				}
+			}
+		}
+	}
+}

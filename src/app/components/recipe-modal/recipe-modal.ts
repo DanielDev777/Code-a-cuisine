@@ -1,10 +1,11 @@
 import { Component, input, output, computed, effect } from '@angular/core';
 import { Recipe } from '../../interfaces/recipe';
 import { Header } from '../../shared/header/header';
+import { RecipeHead } from "./recipe-head/recipe-head";
 
 @Component({
 	selector: 'app-recipe-modal',
-	imports: [Header],
+	imports: [Header, RecipeHead],
 	templateUrl: './recipe-modal.html',
 	styleUrl: './recipe-modal.scss'
 })
