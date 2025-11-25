@@ -5,26 +5,71 @@
 			<img src="img/icons/arrow-left.svg" alt="Close" />
 			Recipe results
 		</button>
-		
+
 		<div class="recipe">
-			<app-recipe-head [recipe]="recipe()"></app-recipe-head>
+			<app-recipe-head
+				class="recipe__head"
+				[recipe]="recipe()"
+			></app-recipe-head>
 			<div class="recipe__ingredients">
 				<div class="recipe__banner">
-					<img src="img/recipe/ingredients_banner.png">
+					<img src="img/recipe/ingredients_banner.png" />
 					<h3 class="h4">Ingredients</h3>
 				</div>
 				<div class="recipe__ingredients--mandatory">
-					<h4 class="h5">Your ingredients</h4>
-					<ul>
-						@for (item of recipe().requiredIngredients; track $index) {
-
-						}
-					</ul>
+					<div class="recipe__ingredients--mandatory-wrapper">
+						<h4 class="h5 darkgreen">Your ingredients</h4>
+						<ul>
+							@for (item of recipe().requiredIngredients; track
+							$index) { @if (item.amount == 'to taste') {
+							<li>
+								{{ recipeAiService.capitalize(item.name) }} ({{
+									item.amount
+								}})
+							</li>
+							} @else {
+							<li>
+								{{ item.amount }}
+								{{ recipeAiService.capitalize(item.name) }}
+							</li>
+							} }
+						</ul>
+					</div>
 				</div>
 				<div class="recipe__ingredients--extra">
-					<h4 class="h5">Extra ingredients</h4>
-
+					<div class="recipe__ingredients--extra-wrapper">
+						<h4 class="h5 darkgreen">Extra ingredients</h4>
+						<ul>
+							@for (item of recipe().optionalIngredients; track
+							$index) { @if (item.amount == 'to taste') {
+							<li>
+								{{ recipeAiService.capitalize(item.name) }} ({{
+									item.amount
+								}})
+							</li>
+							} @else {
+							<li>
+								{{ item.amount }}
+								{{ recipeAiService.capitalize(item.name) }}
+							</li>
+							} }
+						</ul>
+					</div>
 				</div>
+			</div>
+			<div class="recipe__directions">
+				<div class="recipe__banner">
+					<img src="img/recipe/directions_banner.png" />
+					<h3 class="h4">Directions</h3>
+				</div>
+				@for (step of recipe().instructions; track $index) {
+					<div class="step" [class]="$odd ? 'pr-2' : 'pl-2'">
+						<div class="step__head">
+							{{ $index + 1 }}
+						</div>
+						<div class="step__body"></div>
+					</div>
+				}
 			</div>
 		</div>
 	</div>

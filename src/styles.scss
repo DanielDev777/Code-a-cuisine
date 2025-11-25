@@ -192,4 +192,11 @@ button {
 .pill-olive {
 	@include m.pill($bc: v.$olive-light, $fc: v.$darkgreen, $hc: v.$olivegreen);
 }
+
+.pl-2 {
+	padding-left: 2rem;
+}
+.pr-2 {
+	padding-right: 2rem;
+}
 // Utility //

@@ -23,10 +23,33 @@
 	background: v.$creme-light;
 	border-radius: v.$card-radius;
 	@include m.flexBox($ai: flex-start, $g: 10px);
+	&__head {
+		width: 100%;
+	}
+	&__ingredients {
+		width: 100%;
+		@include m.flexBox($ai: flex-start);
+		&--mandatory, 
+		&--extra {
+			flex: 0 0 50%;
+			max-width: 50%;
+		}
+		&--mandatory {
+			padding-right: 2.5rem;
+			@include m.flexBox($ai: flex-start, $jc: flex-end);
+			&-wrapper {
+				width: fit-content;
+			}
+		}
+		&--extra {
+			padding-left: 2.5rem;
+		}
+	}
 	&__banner {
 		position: relative;
 		flex: 0 0 100%;
 		max-width: 100%;
+		margin-bottom: v.$spacing-md;
 		img {
 			width: 100%;
 			object-fit: contain;
@@ -37,6 +60,10 @@
 			left: 50%;
 			transform: translate(-50%, -50%);
 		}
+	}
+	&__directions {
+		width: 100%;		
+		@include m.flexBox($ai: flex-start);
 	}
 }
 

@@ -1,7 +1,8 @@
-import { Component, input, output, computed, effect } from '@angular/core';
+import { Component, input, output, computed, effect, inject } from '@angular/core';
 import { Recipe } from '../../interfaces/recipe';
 import { Header } from '../../shared/header/header';
 import { RecipeHead } from "./recipe-head/recipe-head";
+import { RecipeAiService } from '../../services/recipe-ai.service';
 
 @Component({
 	selector: 'app-recipe-modal',
@@ -10,6 +11,7 @@ import { RecipeHead } from "./recipe-head/recipe-head";
 	styleUrl: './recipe-modal.scss'
 })
 export class RecipeModal {
+	recipeAiService = inject(RecipeAiService);
 	recipe = input.required<Recipe>();
 	close = output<void>();
 

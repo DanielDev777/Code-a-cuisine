@@ -61,12 +61,14 @@ section {
 
 .loading-container {
 	@include m.flexBox($fd:column, $g: v.$spacing-md);
+	height: 100vh;
 }
 .loading-gif {
 	&-container {
-		background: v.$olive-light;
+		background: v.$gif-bg;
 		border-radius: v.$card-radius;
 		padding: v.$spacing-md;
+		color: #fff;
 	}
 	width: 500px;
 	height: 500px;

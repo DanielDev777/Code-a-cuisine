@@ -39,19 +39,23 @@ DIET: ${data.diet}
 INSTRUCTIONS
 Ingredients
 
-1. Ingredients listed are available, not mandatory. Use only what fits the recipe concept.
-2. You may reduce quantities to realistic levels.
-3. Avoid nontraditional heavy-starch mixes (e.g., pasta + potatoes) unless part of traditional or intentional fusion cuisine. Use small amounts if included.
-4. If an ingredient clashes with the cuisine, you may omit it or move it to optional.
-5. Follow the cuisine style unless fusion makes more sense given the ingredients.
+1. Ingredients listed are available, NOT required. The model should freely omit any ingredient. It is completely acceptable for a recipe to use only a few of the provided ingredients. Using fewer ingredients is often better.
+2. At least one of the 3 recipes must be a classic-style dish of the chosen cuisine, using only ingredients that genuinely fit that cuisine (even if this means using only 2–3 of the provided ingredients). Any ingredient that is not traditional for that cuisine should be omitted or moved to optional.
+3. You may reduce quantities to realistic levels.
+4. Avoid nontraditional heavy-starch mixes (e.g., pasta + potatoes). If the chosen cuisine is "fusion", these combinations are allowed.
+5. If the chosen cuisine is NOT "fusion":
+	- Omit or move to optional any ingredient that does not fit the cuisine style.
+6. If the chosen cuisine IS "fusion":
+	- Creative cross-cuisine combinations are allowed.
 
 Recipes
-6. Provide 3 distinct recipes (different techniques, flavors, or complexity).
-7. Keep within the time limit (${data.time}) and the dietary preference (${data.diet}).
-8. Scale each recipe to exactly ${data.portions} portions.
-9. If more than 1 cook: assign parallel tasks labeled Chef 1, Chef 2, etc.
-10. Use combined, detailed steps (avoid very short steps).
-11. Suggest optional ingredients that enhance flavor.
+7. Provide 3 distinct recipes (different techniques, flavors, or complexity).
+8. Keep within the time limit (${data.time}) and the dietary preference (${data.diet}).
+9. Scale each recipe to exactly ${data.portions} portions.
+10. If more than 1 cook: assign parallel tasks labeled Chef 1, Chef 2, etc.
+11. Use combined, detailed steps (avoid very short steps).
+12. Suggest optional ingredients that enhance flavor.
+13. Every instruction object must include a "headline" field containing a short step title (e.g., "Cook the Pasta", "Prepare the Sauce"). The headline must be in English, even if the cuisine is not.
 
 Output Requirements
 Return only valid JSON with this structure:
@@ -76,7 +80,7 @@ Return only valid JSON with this structure:
         { "amount": "", "name": "", "purpose": "" }
       ],
       "instructions": [
-        { "step": 1, "action": "", "assignedTo": "Chef 1", "duration": "", "tip": "" }
+        { "step": 1, "headline": "", "action": "", "assignedTo": "Chef 1", "duration": "", "tip": "" }
       ],
       "nutritionalInfo": {
         "perServing": {
@@ -113,7 +117,8 @@ IMPORTANT RULES:
 	- numberOfCooks: ${data.people}
 	- Keep cooking time within ${data.time}.
 - If ${data.people} > 1, assign tasks across chefs in parallel; if not, assign all to Chef 1.
-- Instructions must be detailed and combined (not too short).`;
+- Instructions must be detailed and combined (not too short).
+- The value of recipeName must always be written in English only. No other languages are allowed, regardless of cuisine.`;
 	}
 
 	async sendRecipeQuery(data: object): Promise<RecipeResponse> {
