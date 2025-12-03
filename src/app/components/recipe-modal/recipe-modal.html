@@ -65,12 +65,40 @@
 				@for (step of recipe().instructions; track $index) {
 					<div class="step" [class]="$odd ? 'pr-2' : 'pl-2'">
 						<div class="step__head">
-							{{ $index + 1 }}
+							<h4 class="h5">
+								<span>{{ step.step }}.</span>
+								{{ step.headline }}
+							</h4>
+							<span class="step__cook" [class]="step.assignedTo == 'Chef 1' ? 'chef-olive' : 'chef-creme'">
+								@if (step.assignedTo === 'Chef 1') {
+									<img src="img/icons/chef_hat.png" alt="Chefs hat Icon">
+								} @else {
+									<img src="img/icons/chef_spork.png" alt="Crossed spoon and fork Icon">
+								}
+								{{ step.assignedTo }}
+							</span>
 						</div>
-						<div class="step__body"></div>
+						<div class="step__body">
+							<p>{{ step.action }}</p>
+						</div>
 					</div>
 				}
 			</div>
+			<div class="recipe__footer">
+				<h3 class="h5">Just finished this meal?</h3>
+				<p>Give it a heart, so that the others know this is delicious.</p>
+				<button class="like-btn">
+					<img src="img/icons/heart.svg" alt="Heart Icon">
+				</button>
+			</div>
+		</div>
+		<div class="cookbook-banner green-card">
+			<h4 class="h5">Find inspiration for your next culinary adventure!</h4>
+			<button class="main-btn btn-green">
+				<a routerLink="/cookbook">
+					Cookbook
+				</a>
+			</button>
 		</div>
 	</div>
 </div>

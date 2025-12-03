@@ -71,7 +71,7 @@ Return only valid JSON with this structure:
       "servings": ${data.portions},
       "timePreference": "${data.time}",
       "cuisine": "${data.cuisine}",
-      "diet": "${data.diet}",
+      "diet": "",
       "numberOfCooks": ${data.people},
       "requiredIngredients": [
         { "amount": "", "name": "", "preparation": "" }
@@ -118,7 +118,13 @@ IMPORTANT RULES:
 	- Keep cooking time within ${data.time}.
 - If ${data.people} > 1, assign tasks across chefs in parallel; if not, assign all to Chef 1.
 - Instructions must be detailed and combined (not too short).
-- The value of recipeName must always be written in English only. No other languages are allowed, regardless of cuisine.`;
+- The value of recipeName must always be written in English only. No other languages are allowed, regardless of cuisine.
+- If ${data.diet} is empty OR equals "no preferences", the model must automatically determine the correct diet label for each recipe based on the actual ingredients used in that recipe:
+	"vegan" → no animal products
+	"vegetarian" → contains dairy/eggs but no meat/fish
+	"none" → contains meat or fish
+	This inferred value must be placed in the “diet” field of the recipe.
+- If ${data.diet} is NOT empty and NOT "no preferences", the model must strictly follow that diet and use that exact value in all recipes.`;
 	}
 
 	async sendRecipeQuery(data: object): Promise<RecipeResponse> {

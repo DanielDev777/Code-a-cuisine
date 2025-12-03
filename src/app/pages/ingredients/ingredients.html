@@ -23,6 +23,19 @@
 								This ingredient is already added. Please use the edit button to modify it.
 							</span>
 						}
+						@if (filteredIngredients().length > 0) {
+							<div class="suggestions-box">
+								@for (ingredient of filteredIngredients(); track
+								ingredient) {
+								<p
+									class="suggestion-item"
+									(click)="selectIngredient(ingredient)"
+								>
+									{{ ingredient }}
+								</p>
+								}
+							</div>
+						}
 					</div>
 					<div class="form-control amount">
 						<span class="ingredients__label">Serving size</span>
@@ -32,36 +45,29 @@
 								id="amount"
 								[formControl]="amountControl"
 							/>
-							<select
-								id="unit"
-								[formControl]="unitControl"
-								(click)="toggleSelect()"
-								(change)="closeSelect()"
-								(blur)="closeSelect()"
-								[class.open]="isSelectOpen()"
-							>
-								<option value="g">gram</option>
-								<option value="ml">ml</option>
-								<option value="piece">piece</option>
-							</select>
+							<div class="custom-select" [class.open]="isSelectOpen()">
+								<div class="select-trigger" (click)="toggleSelect()">
+									{{ getUnitLabel(unitControl.value || 'g') }}
+								</div>
+								@if (isSelectOpen()) {
+									<div class="select-options">
+										<div class="select-option" (click)="selectUnit('g')">
+											gram
+										</div>
+										<div class="select-option" (click)="selectUnit('ml')">
+											ml
+										</div>
+										<div class="select-option" (click)="selectUnit('piece')">
+											piece
+										</div>
+									</div>
+								}
+							</div>
 							<button class="btn-add" (click)="addToList()">
 								<img src="img/icons/add.svg" />
 							</button>
 						</div>
 					</div>
-					@if (filteredIngredients().length > 0) {
-					<div class="suggestions-box">
-						@for (ingredient of filteredIngredients(); track
-						ingredient) {
-						<p
-							class="suggestion-item"
-							(click)="selectIngredient(ingredient)"
-						>
-							{{ ingredient }}
-						</p>
-						}
-					</div>
-					}
 				</div>
 				<div class="ingredients__list-container green-card">
 					<span class="ingredients__label"

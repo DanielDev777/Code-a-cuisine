@@ -22,6 +22,7 @@ export interface Recipe {
 	}[];
 	instructions: {
 		step: number;
+		headline: string;
 		action: string;
 		assignedTo: string;
 		duration: string;

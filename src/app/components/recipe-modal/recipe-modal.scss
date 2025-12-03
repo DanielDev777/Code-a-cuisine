@@ -13,6 +13,7 @@
 	width: 100%;
 	height: 100%;
 	padding: v.$spacing-xl 0;
+	overflow: auto;
 	.back-btn {
 		margin-bottom: calc(v.$spacing-mdg * 2);
 	}
@@ -22,6 +23,7 @@
 	padding: v.$spacing-lg;
 	background: v.$creme-light;
 	border-radius: v.$card-radius;
+	margin-bottom: v.$spacing-lg;
 	@include m.flexBox($ai: flex-start, $g: 10px);
 	&__head {
 		width: 100%;
@@ -63,7 +65,68 @@
 	}
 	&__directions {
 		width: 100%;		
-		@include m.flexBox($ai: flex-start);
+		@include m.flexBox($ai: flex-start, $g: 0px 64px);
+	}
+	&__footer {
+		@include m.flexBox($ai: center, $g: v.$spacing-md);
+		p {
+			margin-right: v.$spacing-md;
+		}
+		.like-btn {
+			@include m.likeBtn();
+		}
+	}
+}
+
+.step {
+	flex: 0 0 calc(50% - 32px);
+	max-width: calc(50% - 32px);
+	margin-bottom: 2.5rem;
+	&__head {
+		margin-bottom: 2rem;
+		@include m.flexBox($jc: space-between);
+		h4 {
+			font-weight: 500;
+			@include m.flexBox($jc: flex-start, $g: v.$spacing-sm);
+			span {
+				@include m.flexBox();
+				width: 2rem;
+				height: 2rem;
+				background: v.$creme;
+				border-radius: 100%;
+				// padding: v.$spacing-sm 1rem;
+				line-height: 1;
+			}
+		}
+	}
+	&__body {
+		p {
+			font-size: 1.1rem;
+		}
+	}
+}
+
+.chef {
+	&-olive {
+		background: v.$chefOne-bg;
+	}
+	&-creme {
+		background: v.$chefTwo-bg;
+	}
+	&-olive,
+	&-creme {
+		padding: 5px;
+		width: fit-content;
+		border-radius: v.$chef-radius;
+		@include m.flexBox($g: v.$spacing-xs);
+	}
+}
+
+.cookbook-banner {
+	padding: 2.5rem v.$spacing-md;
+	@include m.flexBox($g: v.$spacing-mdg);
+	a {
+		color: #fff;
 	}
 }
 

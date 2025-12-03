@@ -3,7 +3,8 @@ import {
 	Component,
 	computed,
 	signal,
-	inject
+	inject,
+	effect
 } from '@angular/core';
 import { Header } from '../../shared/header/header';
 import { ReactiveFormsModule, FormControl, FormsModule } from '@angular/forms';
@@ -17,7 +18,10 @@ import { Preferences } from '../../components/preferences/preferences';
 	imports: [Header, ReactiveFormsModule, FormsModule, IngredientItem, Preferences],
 	templateUrl: './ingredients.html',
 	styleUrl: './ingredients.scss',
-	changeDetection: ChangeDetectionStrategy.OnPush
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	host: {
+		'(document:click)': 'onDocumentClick($event)'
+	}
 })
 export class Ingredients {
 	private ingredientsService = inject(IngredientsService);
@@ -53,7 +57,28 @@ export class Ingredients {
 	}
 
 	closeSelect() {
-		setTimeout(() => this.isSelectOpen.set(false), 100);
+		this.isSelectOpen.set(false);
+	}
+
+	selectUnit(unit: string) {
+		this.unitControl.setValue(unit);
+		this.closeSelect();
+	}
+
+	getUnitLabel(unit: string): string {
+		const labels: Record<string, string> = {
+			g: 'gram',
+			ml: 'ml',
+			piece: 'piece'
+		};
+		return labels[unit] || 'gram';
+	}
+
+	onDocumentClick(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		if (!target.closest('.custom-select')) {
+			this.closeSelect();
+		}
 	}
 
 	selectIngredient(ingredient: string) {
